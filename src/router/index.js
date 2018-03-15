@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
-import Regist from '@/components/Regist'
-import MainPage from '@/components/MainPage'
 
 Vue.use(Router)
 
@@ -11,17 +8,17 @@ export default new Router({
     {
       path: '/',
       name: 'Login',
-      component: Login
+      component: require('@/components/Login')
     },
     {
       path: '/Regist',
       name: 'Regist',
-      component: Regist
+      component: require('@/components/Regist')
     },
     {
       path: '/MainPage',
       name: 'MainPage',
-      component: MainPage
+      component: require('@/components/MainPage')
     }
   ]
 })
