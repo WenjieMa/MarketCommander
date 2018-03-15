@@ -1,4 +1,4 @@
-# marketcommander
+# MarketCommander
 
 > 毕业设计项目,用于研究与测试Vue.js的特性。
 
