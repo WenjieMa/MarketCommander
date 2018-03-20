@@ -1,16 +1,13 @@
 <template>
-  <div class="mainBody">
-
+  <div class="Regist">
   </div>
 </template>
-
 <script>
 export default {
   name: 'Regist',
   data () {
     return {
-      data:{
-
+      data: {
       }
     }
   }

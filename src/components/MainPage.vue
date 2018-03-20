@@ -1,15 +1,13 @@
 <template>
-  <div class="mainBody">
+  <div class="MainPage">
   </div>
 </template>
-
 <script>
 export default {
   name: 'MainPage',
   data () {
     return {
-      data:{
-
+      data: {
       }
     }
   }
