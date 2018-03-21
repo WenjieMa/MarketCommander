@@ -1,13 +1,18 @@
 <template>
   <div id="app">
-    <router-link to="{name:'Login'}">登录</router-link>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data () {
+    return {
+      data: {
+      }
+    }
+  }
 }
 </script>
 

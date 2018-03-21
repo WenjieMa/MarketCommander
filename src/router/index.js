@@ -4,6 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/Login',
@@ -12,6 +13,11 @@ const router = new Router({
       beforeEnter: (to, from, next) => {
         console.log(`独享守卫：从${from}跳转至${to}成功`)
       }
+    },
+    {
+      path: '/',
+      name: 'MainPage',
+      component: require('@/components/MainPage')
     },
     {
       path: '/Regist',

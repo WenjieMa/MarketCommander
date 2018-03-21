@@ -1,5 +1,6 @@
 <template>
   <div class="MainPage">
+    123
   </div>
 </template>
 <script>
