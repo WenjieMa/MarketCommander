@@ -9,25 +9,25 @@ const router = new Router({
     {
       path: '/Login',
       name: 'Login',
-      component: require('@/components/Login'),
+      component: resolve => require(['@/pages/Login'], resolve),
       beforeEnter: (to, from, next) => {
         console.log(`独享守卫：从${from}跳转至${to}成功`)
       }
     },
     {
       path: '/',
-      name: 'MainPage',
-      component: require('@/components/MainPage')
+      name: 'Login',
+      component: resolve => require(['@/pages/Login'], resolve)
     },
     {
       path: '/Regist',
       name: 'Regist',
-      component: require('@/components/Regist')
+      component: resolve => require(['@/pages/Regist'], resolve)
     },
     {
       path: '/MainPage',
       name: 'MainPage',
-      component: require('@/components/MainPage')
+      component: resolve => require(['@/pages/MainPage'], resolve)
     }
   ]
 })
