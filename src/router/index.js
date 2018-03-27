@@ -7,27 +7,27 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/Login',
-      name: 'Login',
-      component: resolve => require(['@/pages/Login'], resolve),
+      path: '/login',
+      name: 'login',
+      component: resolve => require(['@/pages/login'], resolve),
       beforeEnter: (to, from, next) => {
         console.log(`独享守卫：从${from}跳转至${to}成功`)
       }
     },
     {
       path: '/',
-      name: 'Login',
-      component: resolve => require(['@/pages/Login'], resolve)
+      name: 'login',
+      component: resolve => require(['@/pages/login'], resolve)
     },
     {
-      path: '/Regist',
-      name: 'Regist',
-      component: resolve => require(['@/pages/Regist'], resolve)
+      path: '/regist',
+      name: 'regist',
+      component: resolve => require(['@/pages/regist'], resolve)
     },
     {
-      path: '/MainPage',
-      name: 'MainPage',
-      component: resolve => require(['@/pages/MainPage'], resolve)
+      path: '/main-page',
+      name: 'main-page',
+      component: resolve => require(['@/pages/main-page'], resolve)
     }
   ]
 })

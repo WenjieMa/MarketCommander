@@ -1,13 +1,24 @@
 <template>
-  <div class="Login">
+  <div class="login">
+    <el-form ref="form" :model="formValues" label-width="100px" size="mini">
+      <el-form-item label="账号:">
+        <el-input type="text" v-model="formValues.username" placeholder="请输入账号"></el-input>
+      </el-form-item>
+      <el-form-item label="密码:">
+        <el-input type="password" v-model="formValues.password" placeholder="请输入密码"></el-input>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 <script>
 export default {
-  name: 'Login',
-  data () {
+  name: 'login',
+  data() {
     return {
-      data: {}
+      formValues: {
+        username: '',
+        password: ''
+      }
     }
   }
 }

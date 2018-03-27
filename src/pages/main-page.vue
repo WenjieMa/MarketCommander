@@ -1,5 +1,5 @@
 <template>
-  <div class="MainPage">
+  <div class="main-page">
      <el-container>
       <el-aside width="200px">Aside</el-aside>
       <el-container>
@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-  name: 'MainPage',
+  name: 'main-page',
   data () {
     return {
       data: {
