@@ -28,6 +28,11 @@ const router = new Router({
       path: '/main-page',
       name: 'main-page',
       component: resolve => require(['@/pages/main-page'], resolve)
+    },
+    {
+      path: '/forget-psw',
+      name: 'forget-psw',
+      component: resolve => require(['@/pages/forget-psw'], resolve)
     }
   ]
 })
