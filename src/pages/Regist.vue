@@ -4,34 +4,34 @@
       <el-container>
         <el-header>注册你的管理员账号</el-header>
         <el-main>
-          <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="账号:" prop="username">
-              <el-input type="text" v-model="ruleForm2.username" placeholder="请输入账号" auto-complete="off"></el-input>
+              <el-input type="text" v-model="ruleForm.username" placeholder="请输入账号" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="pass">
-              <el-input type="password" v-model="ruleForm2.pass" placeholder="请输入密码" auto-complete="off"></el-input>
+              <el-input type="password" v-model="ruleForm.pass" placeholder="请输入密码" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="确认密码" prop="checkPass">
-              <el-input type="password" v-model="ruleForm2.checkPass" placeholder="请再次输入密码" auto-complete="off"></el-input>
+              <el-input type="password" v-model="ruleForm.checkPass" placeholder="请再次输入密码" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="年龄" prop="age">
-              <el-input v-model.number="ruleForm2.age" placeholder="请输入年龄" auto-complete="off"></el-input>
+              <el-input v-model.number="ruleForm.age" placeholder="请输入年龄" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="手机号" prop="phone">
-              <el-input v-model.number="ruleForm2.phone" @blur="judgePhone()" placeholder="请输入手机号" auto-complete="off"></el-input>
+              <el-input v-model.number="ruleForm.phone" @blur="judgePhone()" placeholder="请输入手机号" auto-complete="off"></el-input>
               <el-button type="primary" :loading="true" round plain disabled v-if="sending&&!isSended">正在发送验证码</el-button>
               <el-button type="primary" :loading="false" disabled round plain v-if="!isPhoneCorrect">发送验证码</el-button>
               <el-button type="primary" @click="onSendMsg()" :loading="false" round plain v-if="!sending&&isPhoneCorrect">发送验证码</el-button>
               <el-button type="success" :loading="false" round plain v-if="isSended">发送成功！</el-button>
             </el-form-item>
             <el-form-item label="验证码" prop="phoneCheckIputNum" v-if="isSended">
-              <el-input v-model.number="ruleForm2.phoneCheckIputNum" placeholder="在此输入验证码" auto-complete="off"></el-input>
+              <el-input v-model.number="ruleForm.phoneCheckIputNum" placeholder="在此输入验证码" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="邮箱" prop="email">
-              <el-input v-model="ruleForm2.email" placeholder="请输入邮箱" auto-complete="off"></el-input>
+              <el-input v-model="ruleForm.email" placeholder="请输入邮箱" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="姓名" prop="name">
-              <el-input v-model="ruleForm2.name" placeholder="请输入姓名" auto-complete="off"></el-input>
+              <el-input v-model="ruleForm.name" placeholder="请输入姓名" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onRegistSubmit">确认注册</el-button>
@@ -69,8 +69,8 @@
         } else if (value.length > 25 || value.length < 6) {
           callback(new Error('请确保密码长度为6-25位!'));
         } else {
-          if (this.ruleForm2.checkPass !== '') {
-            this.$refs.ruleForm2.validateField('checkPass');
+          if (this.ruleForm.checkPass !== '') {
+            this.$refs.ruleForm.validateField('checkPass');
           }
           callback();
         }
@@ -78,7 +78,7 @@
       var validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm2.pass) {
+        } else if (value !== this.ruleForm.pass) {
           callback(new Error('两次输入密码不一致!'));
         } else {
           callback();
@@ -130,7 +130,7 @@
         isPhoneCorrect: false,
         sending: false,
         phoneCheckNum: '',
-        ruleForm2: {
+        ruleForm: {
           username: '',
           pass: '',
           checkPass: '',
@@ -140,7 +140,7 @@
           email: '',
           phoneCheckIputNum: ''
         },
-        rules2: {
+        rules: {
           phoneCheckIputNum: [{
             validator: validatePhoneCheckIputNum,
             trigger: 'blur'
@@ -188,14 +188,14 @@
       },
       judgePhone() {
         const phoneRegex = /^1[0-9]{10}$/i;
-        if (!phoneRegex.test(this.ruleForm2.phone)) {
+        if (!phoneRegex.test(this.ruleForm.phone)) {
           this.isPhoneCorrect = false;
         } else {
           this.isPhoneCorrect = true;
         }
       },
       judgePhoneCheck() {
-        if (this.phoneCheckNum !== this.ruleForm2.phoneCheckIputNum) {
+        if (this.phoneCheckNum !== this.ruleForm.phoneCheckIputNum) {
 
         }
       }

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import './styles/app.less';
 export default {
   name: 'app',
   data () {
