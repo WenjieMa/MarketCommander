@@ -13,15 +13,15 @@
                 <el-input v-model.number="ruleForm.phone" @blur="judgePhone()" placeholder="请输入手机号" auto-complete="off"></el-input>
                 <el-button type="primary" :loading="true" round plain disabled v-if="sending&&!isSended">正在发送验证码</el-button>
                 <el-button type="primary" :loading="false" disabled round plain v-if="!isPhoneCorrect">发送验证码</el-button>
-                <el-button type="primary" @click="onSendMsg()" :loading="false" round plain v-if="!sending&&isPhoneCorrect">发送验证码</el-button>
-                <el-button type="success" :loading="false" round plain v-if="isSended">发送成功！</el-button>
+                <el-button type="primary" @click="onSendMsg()" :loading="false" round plain v-if="!sending&&isPhoneCorrect&&!isSended">发送验证码</el-button>
+                <el-button type="primary" @click="onSendMsg()" :loading="false" round plain v-if="!sending&&isPhoneCorrect&&isSended">再次发送验证码</el-button>
               </el-form-item>
               <el-form-item label="验证码" prop="phoneCheckIputNum" v-if="isSended">
                 <el-input v-model.number="ruleForm.phoneCheckIputNum" placeholder="在此输入验证码" auto-complete="off"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="onSureProcess1">确认信息</el-button>
-                <el-button type="success" @click="onBack">返回</el-button>
+                <el-button type="primary" @click="onSureProcess1()">确认信息</el-button>
+                <el-button type="success" @click="onBack()">返回</el-button>
               </el-form-item>
             </div>
             <div v-if="process==2">
@@ -44,7 +44,7 @@
   </div>
 </template>
 <script>
-  import alert from '@/components/alert.vue';
+  import qcloudsms from '@/utils/qcloudsms.js';
   export default {
     name: 'forget-psw',
     components: {
@@ -52,21 +52,21 @@
     },
     data() {
       var validatePass = (rule, value, callback) => {
-        if (value === '') {
+        if (value == '') {
           callback(new Error('请输入密码'));
         } else if (value.length > 25 || value.length < 6) {
           callback(new Error('请确保密码长度为6-25位!'));
         } else {
-          if (this.ruleForm.checkPass !== '') {
+          if (this.ruleForm.checkPass != '') {
             this.$refs.ruleForm.validateField('checkPass');
           }
           callback();
         }
       }
       var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
+        if (value == '') {
           callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm.pass) {
+        } else if (value != this.ruleForm.pass) {
           callback(new Error('两次输入密码不一致!'));
         } else {
           callback();
@@ -74,7 +74,7 @@
       }
       var validateUsername = (rule, value, callback) => {
         const userRegex = /^[a-z0-9_]+$/i;
-        if (value === '') {
+        if (value == '') {
           callback(new Error('请输入用户名'));
         } else if (!userRegex.test(value)) {
           callback(new Error('请确保用户名由下划线，数字和字母组成!'));
@@ -86,7 +86,7 @@
       }
       var validatePhone = (rule, value, callback) => {
         const phoneRegex = /^1[0-9]{10}$/i;
-        if (value === '') {
+        if (value == '') {
           callback(new Error('请输入手机号'));
         } else if (!phoneRegex.test(value)) {
           callback(new Error('请确保手机号格式正确!'));
@@ -95,9 +95,9 @@
         }
       }
       var validatePhoneCheckIputNum = (rule, value, callback) => {
-        if (value === '') {
+        if (value == '') {
           callback(new Error('请输入验证码！'));
-        } else if (value !== this.phoneCheckNum) {
+        } else if (value != this.phoneCheckNum) {
           callback(new Error('验证码不正确!'));
         } else {
           callback();
@@ -175,10 +175,33 @@
       },
       onSendMsg() {
         this.sending = true;
-        setTimeout(() => {
-          this.phoneCheckNum = 1111;
+        this.phoneCheckNum = qcloudsms.send(this.ruleForm.phone, this.callbackFunc);
+        console.log(this.phoneCheckNum);
+        if (this.phoneCheckNum != '') {
           this.isSended = true;
-        }, 1000);
+        } else {
+          this.isSended = false;
+        }
+      },
+      callbackFunc(err, res, resData) {
+        if (err) {
+          this.$notify.error({
+            title: '出错',
+            message: '消息服务器发送出错！请稍后再试!'
+          });
+        } else if (resData.result == 0) {
+          this.$notify({
+            title: '成功',
+            message: '验证码已经发送到您的手机！',
+            type: 'success'
+          });
+        } else {
+          this.$notify({
+            title: '异常',
+            message: resData.text,
+            type: 'warning'
+          });
+        }
       },
       judgePhone() {
         const phoneRegex = /^1[0-9]{10}$/i;

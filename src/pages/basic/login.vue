@@ -13,7 +13,9 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onLogin">登陆</el-button>
-              <router-link type="success" :to="{ name: 'regist'}"><el-button type="success">注册</el-button></router-link>
+              <router-link type="success" :to="{ name: 'regist'}">
+                <el-button type="success">注册</el-button>
+              </router-link>
               <router-link type="success" :to="{ name: 'forget-psw'}">忘记密码</router-link>
             </el-form-item>
           </el-form>
@@ -37,10 +39,9 @@
     },
     methods: {
       onLogin() {
-
-      },
-      onRegist() {
-
+        this.$router.push({
+          name: 'home'
+        })
       }
     }
   }
@@ -64,7 +65,7 @@
   .el-form {
     margin: auto;
     width: 350px;
-    height: 500px;
+    height: 100%;
   }
 
   .el-main {
