@@ -1,10 +1,11 @@
 <template>
-  <div class="role2assistant">
+  <div class="communication">
+    <router-view></router-view>
   </div>
 </template>
 <script>
 export default {
-  name: 'role2assistant',
+  name: 'communication',
   data () {
     return {
       data: {
@@ -13,4 +14,3 @@ export default {
   }
 }
 </script>
-q

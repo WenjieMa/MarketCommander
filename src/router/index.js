@@ -6,6 +6,12 @@ import {
 
 Vue.use(Router)
 
+const userrouter = {
+  path: '/user/home',
+  name: 'user-home',
+  component: resolve => require(['@/pages/user/home'], resolve)
+}
+
 const systemrouter = {
   path: '/system/home',
   name: 'system-home',
@@ -16,13 +22,30 @@ const systemrouter = {
       component: resolve => require(['@/pages/el-template'], resolve)
     },
     {
+      path: '/system/communication',
+      name: 'system-communication',
+      component: resolve => require(['@/pages/system/communication/communication'], resolve),
+      children: [
+        {
+          path: '/system/communication/chat',
+          name: 'system-chat',
+          component: resolve => require(['@/pages/system/communication/chat'], resolve)
+        },
+        {
+          path: '/system/communication/comment-reply',
+          name: 'system-comment-reply',
+          component: resolve => require(['@/pages/system/communication/comment-reply'], resolve)
+        }
+      ]
+    },
+    {
       path: '/system/item',
       name: 'system-item',
       component: resolve => require(['@/pages/system/item/item'], resolve),
       children: [{
           path: '/system/item/list',
           name: 'item-list',
-          component: resolve => require(['@/pages/system/item/item-edit'], resolve)
+          component: resolve => require(['@/pages/system/item/item-list'], resolve)
         },
         {
           path: '/system/item/edit',
@@ -109,55 +132,51 @@ const router = new Router({
   mode: 'history',
   routes: [{
       path: '/',
-      redirect: 'user-login'
+      redirect: '/system/login'
     }, {
       path: '/user',
       name: 'user',
-      component: resolve => require(['@/pages/user'], resolve)
-    }, {
-      path: '/user/login',
-      name: 'user-login',
-      component: resolve => require(['@/pages/user/basic/login'], resolve)
-    },
-    {
-      path: '/user/regist',
-      name: 'user-regist',
-      component: resolve => require(['@/pages/user/basic/regist'], resolve)
-    },
-    {
-      path: '/user/forget-psw',
-      name: 'user-forget-psw',
-      component: resolve => require(['@/pages/user/basic/forget-psw'], resolve)
-    },
-    {
-      path: '/user/home',
-      name: 'user-home',
-      component: resolve => require(['@/pages/user/home'], resolve),
-      children: [
-
+      component: resolve => require(['@/pages/user'], resolve),
+      children: [{
+          path: '/user/login',
+          name: 'user-login',
+          component: resolve => require(['@/pages/user/basic/login'], resolve)
+        },
+        {
+          path: '/user/regist',
+          name: 'user-regist',
+          component: resolve => require(['@/pages/user/basic/regist'], resolve)
+        },
+        {
+          path: '/user/forget-psw',
+          name: 'user-forget-psw',
+          component: resolve => require(['@/pages/user/basic/forget-psw'], resolve)
+        },
+        userrouter
       ]
     },
     {
       path: '/system',
       name: 'system',
-      component: resolve => require(['@/pages/system'], resolve)
-    },
-    {
-      path: '/system/login',
-      name: 'system-login',
-      component: resolve => require(['@/pages/system/basic/login'], resolve)
-    },
-    {
-      path: '/system/regist',
-      name: 'system-regist',
-      component: resolve => require(['@/pages/system/basic/regist'], resolve)
-    },
-    {
-      path: '/system/forget-psw',
-      name: 'system-forget-psw',
-      component: resolve => require(['@/pages/system/basic/forget-psw'], resolve)
-    },
-    systemrouter
+      component: resolve => require(['@/pages/system'], resolve),
+      children: [{
+          path: '/system/login',
+          name: 'system-login',
+          component: resolve => require(['@/pages/system/basic/login'], resolve)
+        },
+        {
+          path: '/system/regist',
+          name: 'system-regist',
+          component: resolve => require(['@/pages/system/basic/regist'], resolve)
+        },
+        {
+          path: '/system/forget-psw',
+          name: 'system-forget-psw',
+          component: resolve => require(['@/pages/system/basic/forget-psw'], resolve)
+        },
+        systemrouter
+      ]
+    }
   ]
 })
 

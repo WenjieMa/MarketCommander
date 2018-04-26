@@ -1,10 +1,10 @@
 <template>
-  <div class="role2assistant">
+  <div class="start-columns">
   </div>
 </template>
 <script>
 export default {
-  name: 'role2assistant',
+  name: 'start-columns',
   data () {
     return {
       data: {
@@ -13,4 +13,3 @@ export default {
   }
 }
 </script>
-q

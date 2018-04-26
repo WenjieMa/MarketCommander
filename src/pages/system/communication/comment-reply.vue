@@ -1,10 +1,10 @@
 <template>
-  <div class="role2assistant">
+  <div class="comment-reply">
   </div>
 </template>
 <script>
 export default {
-  name: 'role2assistant',
+  name: 'comment-reply',
   data () {
     return {
       data: {
@@ -13,4 +13,3 @@ export default {
   }
 }
 </script>
-q
