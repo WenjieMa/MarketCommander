@@ -6,7 +6,7 @@ const orderRoute = {
       path: '/system/order/list',
       name: 'order-list',
       meta: {
-        menu: 'order|list'
+        menu: 'order|order-list'
       },
       component: resolve => require(['@/pages/system/order/order-list'], resolve)
     },
@@ -14,7 +14,7 @@ const orderRoute = {
       path: '/system/order/refund',
       name: 'order-refund',
       meta: {
-        menu: 'order|refund'
+        menu: 'order|order-refund'
       },
       component: resolve => require(['@/pages/system/order/order-refund'], resolve)
     }

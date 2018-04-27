@@ -26,7 +26,7 @@
       <el-menu-item index="/system/main-page/hot-search">
         <template slot="title">营销中心</template>
       </el-menu-item>
-      <el-menu-item index="/system/systeminfo">
+      <el-menu-item index="/system/systeminfo/district/list">
         <template slot="title">系统数据中心</template>
       </el-menu-item>
       <el-menu-item index="/system/operator/list">

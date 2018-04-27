@@ -6,7 +6,7 @@ const itemRoute = {
       path: '/system/item/list',
       name: 'item-list',
       meta: {
-        menu: 'item|list'
+        menu: 'item|item-list'
       },
       component: resolve => require(['@/pages/system/item/item-list'], resolve)
     },
@@ -14,7 +14,7 @@ const itemRoute = {
       path: '/system/item/edit',
       name: 'item-edit',
       meta: {
-        menu: 'item|edit'
+        menu: 'item|item-edit'
       },
       component: resolve => require(['@/pages/system/item/item-edit'], resolve)
     },
@@ -22,7 +22,7 @@ const itemRoute = {
       path: '/system/item/import',
       name: 'item-import',
       meta: {
-        menu: 'item|import'
+        menu: 'item|item-import'
       },
       component: resolve => require(['@/pages/system/item/import/item-import-infolist'], resolve)
     },
@@ -30,7 +30,7 @@ const itemRoute = {
       path: '/system/item/itemtype',
       name: 'item-itemtype',
       meta: {
-        menu: 'item|itemtype'
+        menu: 'item|item-itemtype'
       },
       component: resolve => require(['@/pages/system/item/itemtype/itemtype-list'], resolve)
     }

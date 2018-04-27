@@ -110,6 +110,7 @@ router.beforeEach((to, from, next) => {
   // console.log('menu:' + menu + '/userLogin:' + '/from:' + qs.stringify(from) + '/to.path:' + to.path);
   if (!isBase) {
     store.dispatch('selectMenu', to.meta.menu || 'null|null');
+    console.log('系统nav:' + store.state.menu.nav + '系统side:' + store.state.menu.side);
   }
   next();
 

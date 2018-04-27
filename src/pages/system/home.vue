@@ -4,7 +4,7 @@
     <sidebar></sidebar>
     <transition name="fade" mode="out-in">
       <div class="main-contain">
-        <el-card class="ta-left font12">
+        <el-card class="ta-left font12" style="margin-bottom:25px">
           当前位置：
         </el-card>
         <el-card class="box-card">

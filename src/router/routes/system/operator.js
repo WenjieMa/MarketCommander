@@ -4,16 +4,16 @@ const operatorRoute = {
   component: resolve => require(['@/pages/system/operator/operator'], resolve),
   children: [{
     path: '/system/operator/list',
-    name: 'operator-assistant-list',
+    name: 'assistant-list',
     meta: {
-      menu: 'operator|list'
+      menu: 'operator|assistant-list'
     },
     component: resolve => require(['@/pages/system/operator/assistant-list'], resolve)
   }, {
     path: '/system/operator/edit',
-    name: 'operator-assistant-edit',
+    name: 'assistant-edit',
     meta: {
-      menu: 'operator|edit'
+      menu: 'operator|assistant-edit'
     },
     component: resolve => require(['@/pages/system/operator/assistant-edit'], resolve)
   }]

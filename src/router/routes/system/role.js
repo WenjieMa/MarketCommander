@@ -6,7 +6,7 @@ const roleRoute = {
       path: '/system/role/list',
       name: 'role-list',
       meta: {
-        menu: 'role|list'
+        menu: 'role|role-list'
       },
       component: resolve => require(['@/pages/system/role/role-list'], resolve)
     },
@@ -14,7 +14,7 @@ const roleRoute = {
       path: '/system/role/edit',
       name: 'role-edit',
       meta: {
-        menu: 'role|edit'
+        menu: 'role|role-edit'
       },
       component: resolve => require(['@/pages/system/role/role-edit'], resolve)
     },

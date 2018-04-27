@@ -4,7 +4,7 @@ const mainPageRoute = {
     component: resolve => require(['@/pages/system/main-page/main-page'], resolve),
     children: [{
         path: '/system/main-page/hot-search',
-        name: 'system-hot-search',
+        name: 'hot-search',
         meta: {
           menu: 'main-page|hot-search'
         },
@@ -12,7 +12,7 @@ const mainPageRoute = {
       },
       {
         path: '/system/main-page/start-images',
-        name: 'system-start-images',
+        name: 'start-images',
         meta: {
           menu: 'main-page|start-images'
         },
@@ -20,7 +20,7 @@ const mainPageRoute = {
       },
       {
         path: '/system/main-page/announcement-list',
-        name: 'system-announcement-list',
+        name: 'announcement-list',
         meta: {
           menu: 'main-page|announcement-list'
         },
@@ -28,7 +28,7 @@ const mainPageRoute = {
       },
       {
         path: '/system/main-page/start-columns',
-        name: 'system-start-columns',
+        name: 'start-columns',
         meta: {
           menu: 'main-page|start-columns'
         },

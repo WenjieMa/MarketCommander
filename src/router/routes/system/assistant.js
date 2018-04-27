@@ -4,17 +4,17 @@ const assistantRoute = {
   component: resolve => require(['@/pages/system/assistant/assistant'], resolve),
   children: [{
       path: '/system/assistant/list',
-      name: 'assistant-user-list',
+      name: 'user-list',
       meta: {
-        menu: 'assistant|list'
+        menu: 'assistant|user-list'
       },
       component: resolve => require(['@/pages/system/assistant/user-list'], resolve)
     },
     {
       path: '/system/assistant/edit',
-      name: 'assistant-user-edit',
+      name: 'user-edit',
       meta: {
-        menu: 'assistant|edit'
+        menu: 'assistant|user-edit'
       },
       component: resolve => require(['@/pages/system/assistant/user-edit'], resolve)
     }

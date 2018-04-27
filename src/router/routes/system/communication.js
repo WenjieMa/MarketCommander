@@ -6,7 +6,7 @@ const communicationRoute = {
       path: '/system/communication/chat',
       name: 'system-chat',
       meta: {
-        menu: 'communication|chat'
+        menu: 'communication|system-chat'
       },
       component: resolve => require(['@/pages/system/communication/chat'], resolve)
     },
@@ -14,7 +14,7 @@ const communicationRoute = {
       path: '/system/communication/comment-reply',
       name: 'system-comment-reply',
       meta: {
-        menu: 'communication|comment-reply'
+        menu: 'communication|system-comment-reply'
       },
       component: resolve => require(['@/pages/system/communication/comment-reply'], resolve)
     }

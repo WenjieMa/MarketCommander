@@ -5,7 +5,7 @@ const systeminfoRoute = {
   children: [
     {
       path: '/system/systeminfo/district/list',
-      name: 'systeminfo-district-list',
+      name: 'district-list',
       meta: {
         menu: 'systeminfo|district-list'
       },
@@ -13,7 +13,7 @@ const systeminfoRoute = {
     },
     {
       path: '/system/systeminfo/district/edit',
-      name: 'systeminfo-district-edit',
+      name: 'district-edit',
       meta: {
         menu: 'systeminfo|district-edit'
       },
@@ -21,7 +21,7 @@ const systeminfoRoute = {
     },
     {
       path: '/system/systeminfo/express/list',
-      name: 'systeminfo-express-list',
+      name: 'express-list',
       meta: {
         menu: 'systeminfo|express-list'
       },
@@ -29,7 +29,7 @@ const systeminfoRoute = {
     },
     {
       path: '/system/systeminfo/express/edit',
-      name: 'systeminfo-express-edit',
+      name: 'express-edit',
       meta: {
         menu: 'systeminfo|express-edit'
       },

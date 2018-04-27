@@ -6,7 +6,7 @@ const instance = axios.create();
 
 instance.defaults.timeout = 15000; // 响应时间
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'; // 配置请求头
-instance.defaults.baseURL = config.service.host; // 配置接口地址
+instance.defaults.baseURL = config.service.host; // 配置接口地址 具体地址为马文杰的腾讯云服务器地址
 // instance.defaults.withCredentials = true;
 
 /**
