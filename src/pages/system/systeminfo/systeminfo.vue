@@ -1,11 +1,12 @@
 <template>
-  <div class="order-delivery">
+  <div class="systeminfo">
+     我是systeminfo
     <router-view></router-view>
   </div>
 </template>
 <script>
 export default {
-  name: 'order-delivery',
+  name: 'systeminfo',
   data () {
     return {
       data: {

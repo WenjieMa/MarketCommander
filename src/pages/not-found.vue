@@ -1,11 +1,11 @@
 <template>
-  <div class="item-list">
-    我是itemlist
+  <div class="not-found">
+    <h1>糟糕，该页面乘着火箭去月球了!</h1>
   </div>
 </template>
 <script>
 export default {
-  name: 'item-list',
+  name: 'not-found',
   data () {
     return {
       data: {

@@ -1,11 +1,11 @@
 <template>
-  <div class="item-list">
-    我是itemlist
+  <div class="order-list">
+    <router-view></router-view>
   </div>
 </template>
 <script>
 export default {
-  name: 'item-list',
+  name: 'order-list',
   data () {
     return {
       data: {

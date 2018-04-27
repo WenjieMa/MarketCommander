@@ -1,8 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import {
-  stringify
-} from 'querystring';
+// import qs from 'qs';
+import mainPageRoute from './routes/system/main-page';
+import communicationRoute from './routes/system/communication';
+import systeminfoRoute from './routes/system/systeminfo';
+import itemRoute from './routes/system/item';
+import orderRoute from './routes/system/order';
+import assistantRoute from './routes/system/assistant';
+import operatorRoute from './routes/system/operator';
+import roleRoute from './routes/system/role';
+
+import store from '@/app-store/vuex';
 
 Vue.use(Router)
 
@@ -16,93 +24,22 @@ const systemrouter = {
   path: '/system/home',
   name: 'system-home',
   component: resolve => require(['@/pages/system/home'], resolve),
-  children: [{
+  children: [
+    mainPageRoute,
+    communicationRoute,
+    systeminfoRoute,
+    itemRoute,
+    orderRoute,
+    assistantRoute,
+    operatorRoute,
+    roleRoute,
+    {
       path: '/system/el-template',
       name: 'el-template',
+      meta: {
+        menu: 'home'
+      },
       component: resolve => require(['@/pages/el-template'], resolve)
-    },
-    {
-      path: '/system/communication',
-      name: 'system-communication',
-      component: resolve => require(['@/pages/system/communication/communication'], resolve),
-      children: [{
-          path: '/system/communication/chat',
-          name: 'system-chat',
-          component: resolve => require(['@/pages/system/communication/chat'], resolve)
-        },
-        {
-          path: '/system/communication/comment-reply',
-          name: 'system-comment-reply',
-          component: resolve => require(['@/pages/system/communication/comment-reply'], resolve)
-        }
-      ]
-    },
-    {
-      path: '/system/item',
-      name: 'system-item',
-      component: resolve => require(['@/pages/system/item/item'], resolve),
-      children: [{
-          path: '/system/item/list',
-          name: 'item-list',
-          component: resolve => require(['@/pages/system/item/item-list'], resolve)
-        },
-        {
-          path: '/system/item/edit',
-          name: 'item-edit',
-          component: resolve => require(['@/pages/system/item/item-edit'], resolve)
-        }
-      ]
-    },
-    {
-      path: '/system/assistant',
-      name: 'assistant',
-      component: resolve => require(['@/pages/system/assistant/assistant'], resolve),
-      children: [{
-          path: '/system/assistant/list',
-          name: 'assistant-user-list',
-          component: resolve => require(['@/pages/system/assistant/user-list'], resolve)
-        },
-        {
-          path: '/system/assistant/edit',
-          name: 'assistant-user-edit',
-          component: resolve => require(['@/pages/system/assistant/user-edit'], resolve)
-        }
-      ]
-    },
-    {
-      path: '/system/operator',
-      name: 'operator',
-      component: resolve => require(['@/pages/system/operator/operator'], resolve),
-      children: [{
-        path: '/system/operator/list',
-        name: 'operator-assistant-list',
-        component: resolve => require(['@/pages/system/operator/assistant-list'], resolve)
-      }, {
-        path: '/system/operator/edit',
-        name: 'operator-assistant-edit',
-        component: resolve => require(['@/pages/system/operator/assistant-edit'], resolve)
-      }]
-    },
-    {
-      path: '/system/role',
-      name: 'role',
-      component: resolve => require(['@/pages/system/role/role'], resolve),
-      children: [{
-          path: '/system/role/list',
-          name: 'role-list',
-          component: resolve => require(['@/pages/system/role/role-list'], resolve)
-        },
-        {
-          path: '/system/role/edit',
-          name: 'role-edit',
-          component: resolve => require(['@/pages/system/role/role-edit'], resolve)
-        },
-        {
-          path: '/system/role2assistant',
-          name: 'role2assistant',
-          component: resolve => require(['@/pages/system/role/role2assistant'], resolve)
-        }
-      ]
     }
   ]
 }
@@ -156,38 +93,39 @@ const router = new Router({
         systemrouter
       ]
     }
+    // ,
+    // {
+    //   path: '*',
+    //   component: resolve => require(['@/pages/not-found'], resolve)
+    // }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('to:' + stringify(to));
-  console.log('from:' + stringify(from));
-  console.log('next:' + stringify(next));
-  console.log(`正在从${from}跳转至${to}`)
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    var judge = false
-    if (this.$store.state.user.correct) {
-      judge = true;
-    }
-    if (!judge) {
-      next({
-        path: '/login',
-        query: {
-          redirect: to.fullPath
-        }
-      })
-    } else {
-      next()
-    }
-  } else {
-    next() // 确保一定要调用 next()
+  var isBase = true;
+  if (to.path !== '/system/login' && to.path !== '/system/regist' && to.path !== '/system/forget-psw' && to.path !== '/user/login' && to.path !== '/user/regist' && to.path !== '/user/forget-psw') {
+    isBase = false;
   }
+  // const menu = to.meta.nav ? to.meta.nav.split('|')[0] : '';
+  // console.log('menu:' + menu + '/userLogin:' + '/from:' + qs.stringify(from) + '/to.path:' + to.path);
+  if (!isBase) {
+    store.dispatch('selectMenu', to.meta.menu || 'null|null');
+  }
+  next();
+
+  // 未登录状态下随意浏览跳转至登录
+  // const isLogin = store.state.user.correct; // true用户已登录， false用户未登录
+  // if (!isLogin && to.path !== '/system/login' && to.path !== '/system/regist' && to.path !== '/system/forget-psw' && to.path !== '/user/login' && to.path !== '/user/regist' && to.path !== '/user/forget-psw') {
+  //   return next({
+  //     name: 'system-login'
+  //   });
+  // } else {
+  //   next();
+  // }
+  next();
 })
 
 router.afterEach((to, from) => {
-  console.log(`从${from}跳转至${to}成功`)
 })
 
 export default router
