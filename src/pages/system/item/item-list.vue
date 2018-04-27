@@ -1,16 +1,16 @@
 <template>
   <div class="item-list">
-    我是itemlist
   </div>
 </template>
 <script>
-export default {
-  name: 'item-list',
-  data () {
-    return {
-      data: {
+  export default {
+    name: 'item-list',
+    data() {
+      return {
+        data: {
+        }
       }
     }
   }
-}
+
 </script>

@@ -6,7 +6,9 @@ const mainPageRoute = {
         path: '/system/main-page/hot-search',
         name: 'hot-search',
         meta: {
-          menu: 'main-page|hot-search'
+          menu: 'main-page|hot-search',
+          name: '热词设置',
+          index: 2
         },
         component: resolve => require(['@/pages/system/main-page/hot-search'], resolve)
       },
@@ -14,7 +16,9 @@ const mainPageRoute = {
         path: '/system/main-page/start-images',
         name: 'start-images',
         meta: {
-          menu: 'main-page|start-images'
+          menu: 'main-page|start-images',
+          name: '轮播图片',
+          index: 2
         },
         component: resolve => require(['@/pages/system/main-page/start-images'], resolve)
       },
@@ -22,7 +26,9 @@ const mainPageRoute = {
         path: '/system/main-page/announcement-list',
         name: 'announcement-list',
         meta: {
-          menu: 'main-page|announcement-list'
+          menu: 'main-page|announcement-list',
+          name: '公告信息',
+          index: 2
         },
         component: resolve => require(['@/pages/system/main-page/announcement/announcement-list'], resolve)
       },
@@ -30,7 +36,9 @@ const mainPageRoute = {
         path: '/system/main-page/start-columns',
         name: 'start-columns',
         meta: {
-          menu: 'main-page|start-columns'
+          menu: 'main-page|start-columns',
+          name: '栏目设置',
+          index: 2
         },
         component: resolve => require(['@/pages/system/main-page/start-columns/start-columns-list'], resolve)
       }

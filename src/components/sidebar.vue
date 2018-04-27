@@ -66,7 +66,7 @@
     },
     computed: {
       activeSide() {
-        console.log('当前side:' + this.$store.state.menu.side);
+        // console.log('当前side:' + this.$store.state.menu.side);
         return this.$store.state.menu.side;
       }
     }

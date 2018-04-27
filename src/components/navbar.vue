@@ -40,19 +40,21 @@
   export default {
     name: 'navbar',
     data() {
-      return {
-        activeIndex: '/system/el-template'
-      };
+      return {}
     },
     methods: {
       handleSelect(key, keyPath) {
-        this.activeIndex = key;
+        this.$store.state.activeIndex = key;
         this.$router.push({
           path: key
         });
       }
     },
-    computed: {}
+    computed: {
+      activeIndex() {
+        return this.$store.state.activeIndex;
+      }
+    }
   }
 
 </script>

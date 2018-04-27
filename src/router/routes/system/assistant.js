@@ -6,7 +6,9 @@ const assistantRoute = {
       path: '/system/assistant/list',
       name: 'user-list',
       meta: {
-        menu: 'assistant|user-list'
+        menu: 'assistant|user-list',
+        name: '用户列表',
+        index: 2
       },
       component: resolve => require(['@/pages/system/assistant/user-list'], resolve)
     },
@@ -14,7 +16,9 @@ const assistantRoute = {
       path: '/system/assistant/edit',
       name: 'user-edit',
       meta: {
-        menu: 'assistant|user-edit'
+        menu: 'assistant|user-edit',
+        name: '用户编辑',
+        index: 2
       },
       component: resolve => require(['@/pages/system/assistant/user-edit'], resolve)
     }

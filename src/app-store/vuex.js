@@ -20,7 +20,9 @@ const store = new Vuex.Store({
     menu: {
       nav: null,
       side: null
-    }
+    },
+    routeList: [],
+    activeIndex: ''
   },
   mutations: {
     // 选择导航栏菜单
@@ -30,11 +32,21 @@ const store = new Vuex.Store({
         nav: arr[0] || 'null',
         side: arr[1] || 'null'
       };
+    },
+    changeRoute(state, routeList) {
+      state.routeList = routeList;
     }
   },
   actions: {
-    selectMenu({ commit }, str) {
+    selectMenu({
+      commit
+    }, str) {
       commit('selectMenu', str);
+    },
+    changeRoute({
+      commit
+    }, routeList) {
+      commit('changeRoute', routeList);
     }
   }
 })
