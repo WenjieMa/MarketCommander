@@ -6,7 +6,7 @@
         <router-link :to="{name: 'el-template'}">首页</router-link>
       </el-menu-item>
       <el-menu-item index="2">
-        <template slot="title">商品中心</template>
+        <template slot="title"> <i class="el-icon-goods"></i>yarn商品中心</template>
       </el-menu-item>
       <el-menu-item index="3">
         <template slot="title">订单中心</template>
@@ -35,8 +35,7 @@
     name: 'navbar',
     data() {
       return {
-        activeIndex: '1',
-        activeIndex2: '1'
+        activeIndex: '1'
       };
     },
     methods: {

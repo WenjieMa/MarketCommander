@@ -1,10 +1,12 @@
 <template>
-  <div class="user-add">
+  <div class="item">
+     我是item
+    <router-view></router-view>
   </div>
 </template>
 <script>
 export default {
-  name: 'user-add',
+  name: 'item',
   data () {
     return {
       data: {

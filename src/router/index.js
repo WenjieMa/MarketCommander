@@ -25,8 +25,7 @@ const systemrouter = {
       path: '/system/communication',
       name: 'system-communication',
       component: resolve => require(['@/pages/system/communication/communication'], resolve),
-      children: [
-        {
+      children: [{
           path: '/system/communication/chat',
           name: 'system-chat',
           component: resolve => require(['@/pages/system/communication/chat'], resolve)
@@ -51,13 +50,7 @@ const systemrouter = {
           path: '/system/item/edit',
           name: 'item-edit',
           component: resolve => require(['@/pages/system/item/item-edit'], resolve)
-        },
-        {
-          path: '/system/item/add',
-          name: 'item-add',
-          component: resolve => require(['@/pages/system/item/item-add'], resolve)
         }
-
       ]
     },
     {
@@ -73,11 +66,6 @@ const systemrouter = {
           path: '/system/assistant/edit',
           name: 'assistant-user-edit',
           component: resolve => require(['@/pages/system/assistant/user-edit'], resolve)
-        },
-        {
-          path: '/system/assistant/add',
-          name: 'assistant-user-add',
-          component: resolve => require(['@/pages/system/assistant/user-add'], resolve)
         }
       ]
     },
@@ -93,10 +81,6 @@ const systemrouter = {
         path: '/system/operator/edit',
         name: 'operator-assistant-edit',
         component: resolve => require(['@/pages/system/operator/assistant-edit'], resolve)
-      }, {
-        path: '/system/operator/add',
-        name: 'operator-assistant-add',
-        component: resolve => require(['@/pages/system/operator/assistant-add'], resolve)
       }]
     },
     {
@@ -112,11 +96,6 @@ const systemrouter = {
           path: '/system/role/edit',
           name: 'role-edit',
           component: resolve => require(['@/pages/system/role/role-edit'], resolve)
-        },
-        {
-          path: '/system/role/add',
-          name: 'role-add',
-          component: resolve => require(['@/pages/system/role/role-add'], resolve)
         },
         {
           path: '/system/role2assistant',
