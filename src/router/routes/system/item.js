@@ -18,7 +18,7 @@ const itemRoute = {
       meta: {
         menu: 'item|item-edit',
         name: '商品编辑',
-        index: 2
+        index: 3
       },
       component: resolve => require(['@/pages/system/item/item-edit'], resolve)
     },

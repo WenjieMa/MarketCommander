@@ -1,6 +1,6 @@
 import qs from 'qs';
 import axios from 'axios';
-import config from './system-config';
+import config from './configs/system-config';
 
 const instance = axios.create();
 

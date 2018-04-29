@@ -1,7 +1,6 @@
 <template>
   <div class="item">
      我是item
-    <router-view></router-view>
   </div>
 </template>
 <script>

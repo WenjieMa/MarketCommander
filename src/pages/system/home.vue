@@ -10,8 +10,8 @@
         </el-card>
       </div>
     </transition>
-    <div class="loading-mask" v-if="this.$store.state.loading.active"></div>
-    <div class="loading" v-if="this.$store.state.loading.active">
+    <div class="loading-mask" v-if="utils.loading.active"></div>
+    <div class="loading" v-if="utils.loading.active">
       <svg viewBox="25 25 50 50" class="circular">
         <circle cx="50" cy="50" r="20" fill="none" class="path">
         </circle>

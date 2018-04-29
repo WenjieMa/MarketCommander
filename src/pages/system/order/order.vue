@@ -1,6 +1,5 @@
 <template>
   <div class="order">
-    我是order
     <router-view></router-view>
   </div>
 </template>

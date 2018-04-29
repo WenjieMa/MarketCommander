@@ -3,8 +3,7 @@
     <el-menu :default-active="activeSide" class="el-menu-vertical-demo"  @select="handleSelect" @open="handleOpen" @close="handleClose">
       <span v-show="this.$store.state.menu.nav == 'item'">
         <el-menu-item index="item-list">商品信息管理</el-menu-item>
-        <el-menu-item index="item-edit">商品添加</el-menu-item>
-        <el-menu-item index="item-import">进货</el-menu-item>
+        <el-menu-item index="item-import">进货管理</el-menu-item>
         <el-menu-item index="item-itemtype">商品分类管理</el-menu-item>
       </span>
       <span v-show="this.$store.state.menu.nav == 'communication'">

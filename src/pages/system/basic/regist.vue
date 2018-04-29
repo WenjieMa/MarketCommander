@@ -4,7 +4,7 @@
       <el-container>
         <el-header>注册你的管理员账号</el-header>
         <el-main>
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="not-inline-form">
             <el-form-item label="账号:" prop="username">
               <el-input type="text" v-model="ruleForm.username" placeholder="请输入账号" auto-complete="off"></el-input>
             </el-form-item>
@@ -35,7 +35,9 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onRegistSubmit()">确认注册</el-button>
-              <el-button type="success" @click="onBack()">返回</el-button>
+              <router-link type="success" :to="{ name: 'system-login'}">
+                <el-button type="success">返回</el-button>
+              </router-link>
             </el-form-item>
           </el-form>
         </el-main>

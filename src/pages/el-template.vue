@@ -355,13 +355,8 @@
       </el-rate>
     </div>
     <div class="el-card">表单
-      <el-radio-group v-model="labelPosition" size="small">
-        <el-radio-button label="left">左对齐</el-radio-button>
-        <el-radio-button label="right">右对齐</el-radio-button>
-        <el-radio-button label="top">顶部对齐</el-radio-button>
-      </el-radio-group>
       <div style="margin: 20px;"></div>
-      <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
+      <el-form :label-position="labelPosition" label-width="80px">
         <el-form-item label="名称">
           <el-input v-model="formLabelAlign.name"></el-input>
         </el-form-item>
@@ -377,7 +372,7 @@
       <el-table :data="tableData5" style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
-            <el-form label-position="left" inline class="demo-table-expand">
+            <el-form label-position="left" inline class="table-expand">
               <el-form-item label="商品名称">
                 <span>{{ props.row.name }}</span>
               </el-form-item>
@@ -1216,16 +1211,16 @@
 
   /* 表格css */
 
-  .demo-table-expand {
+  .table-expand {
     font-size: 0;
   }
 
-  .demo-table-expand label {
+  .table-expand label {
     width: 90px;
     color: #99a9bf;
   }
 
-  .demo-table-expand .el-form-item {
+  .table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;
     width: 50%;

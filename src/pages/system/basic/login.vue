@@ -4,7 +4,7 @@
       <el-container>
         <el-header>欢迎使用MarketCommander购物管理系统</el-header>
         <el-main>
-          <el-form ref="form" :model="formValues" label-width="100px" size="mini">
+          <el-form ref="form" :model="formValues" label-width="100px" size="mini" class="not-inline-form">
             <el-form-item label="账号:">
               <el-input type="text" v-model="formValues.username" placeholder="请输入账号"></el-input>
             </el-form-item>
@@ -40,7 +40,7 @@
     methods: {
       onLogin() {
         this.$router.push({
-          path: '/system/home',
+          path: '/system/el-template',
           param: {
             userid: 1
           }
@@ -50,31 +50,3 @@
   }
 
 </script>
-<style>
-  a {
-    text-decoration: none;
-    color: #409EFF;
-    font-size: 13px;
-  }
-
-  * {
-    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  }
-
-  .el-header {
-    font-size: 20px;
-  }
-
-  .el-form {
-    margin: auto;
-    width: 350px;
-    height: 100%;
-  }
-
-  .el-main {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-  }
-
-</style>
