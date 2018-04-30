@@ -16,7 +16,7 @@
           订单中心
         </template>
       </el-menu-item>
-      <el-menu-item index="/system/communication/chat">
+      <el-menu-item index="/system/communication/chat-list">
         <template slot="title">
           <i class="el-icon-message"></i>沟通中心</template>
       </el-menu-item>

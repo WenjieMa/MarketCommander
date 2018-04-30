@@ -3,24 +3,44 @@ const communicationRoute = {
   name: 'system-communication',
   component: resolve => require(['@/pages/system/communication/communication'], resolve),
   children: [{
-      path: '/system/communication/chat',
-      name: 'system-chat',
+      path: '/system/communication/chat-list',
+      name: 'system-chat-list',
       meta: {
-        menu: 'communication|system-chat',
+        menu: 'communication|system-chat-list',
         name: '留言回复',
         index: 2
       },
-      component: resolve => require(['@/pages/system/communication/chat'], resolve)
+      component: resolve => require(['@/pages/system/communication/chat/chat-list'], resolve)
     },
     {
-      path: '/system/communication/comment-reply',
-      name: 'system-comment-reply',
+      path: '/system/communication/chat-detail',
+      name: 'system-chat-detail',
       meta: {
-        menu: 'communication|system-comment-reply',
-        name: '评论回复',
+        menu: 'communication|system-chat-detail',
+        name: '留言详情',
+        index: 3
+      },
+      component: resolve => require(['@/pages/system/communication/chat/chat-detail'], resolve)
+    },
+    {
+      path: '/system/communication/comment-list',
+      name: 'system-comment-list',
+      meta: {
+        menu: 'communication|system-comment-list',
+        name: '评论列表',
         index: 2
       },
-      component: resolve => require(['@/pages/system/communication/comment-reply'], resolve)
+      component: resolve => require(['@/pages/system/communication/comment/comment-list'], resolve)
+    },
+    {
+      path: '/system/communication/comment-detail',
+      name: 'system-comment-detail',
+      meta: {
+        menu: 'communication|system-comment-detail',
+        name: '评论详情',
+        index: 3
+      },
+      component: resolve => require(['@/pages/system/communication/comment/comment-detail'], resolve)
     }
   ]
 }

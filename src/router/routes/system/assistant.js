@@ -13,14 +13,14 @@ const assistantRoute = {
       component: resolve => require(['@/pages/system/assistant/user-list'], resolve)
     },
     {
-      path: '/system/assistant/edit',
-      name: 'user-edit',
+      path: '/system/assistant/detail',
+      name: 'user-detail',
       meta: {
-        menu: 'assistant|user-edit',
-        name: '用户编辑',
-        index: 2
+        menu: 'assistant|user-detail',
+        name: '用户详情',
+        index: 3
       },
-      component: resolve => require(['@/pages/system/assistant/user-edit'], resolve)
+      component: resolve => require(['@/pages/system/assistant/user-deatil'], resolve)
     }
   ]
 }

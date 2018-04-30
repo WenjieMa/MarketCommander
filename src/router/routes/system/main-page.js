@@ -13,14 +13,24 @@ const mainPageRoute = {
         component: resolve => require(['@/pages/system/main-page/hot-search'], resolve)
       },
       {
-        path: '/system/main-page/start-images',
-        name: 'start-images',
+        path: '/system/main-page/start-images-list',
+        name: 'start-images-list',
         meta: {
-          menu: 'main-page|start-images',
+          menu: 'main-page|start-images-list',
           name: '轮播图片',
           index: 2
         },
-        component: resolve => require(['@/pages/system/main-page/start-images'], resolve)
+        component: resolve => require(['@/pages/system/main-page/start-images/start-images-list'], resolve)
+      },
+      {
+        path: '/system/main-page/start-images-edit',
+        name: 'start-images-edit',
+        meta: {
+          menu: 'main-page|start-images-edit',
+          name: '新增轮播图片',
+          index: 3
+        },
+        component: resolve => require(['@/pages/system/main-page/start-images/start-images-edit'], resolve)
       },
       {
         path: '/system/main-page/announcement-list',
@@ -41,6 +51,16 @@ const mainPageRoute = {
           index: 2
         },
         component: resolve => require(['@/pages/system/main-page/start-columns/start-columns-list'], resolve)
+      },
+      {
+        path: '/system/main-page/start-columns-detail',
+        name: 'start-columns',
+        meta: {
+          menu: 'main-page|start-columns-detail',
+          name: '二级栏目设置',
+          index: 3
+        },
+        component: resolve => require(['@/pages/system/main-page/start-columns/start-columns-detail'], resolve)
       }
     ]
   }

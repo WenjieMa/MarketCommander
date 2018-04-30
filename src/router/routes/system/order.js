@@ -21,6 +21,16 @@ const orderRoute = {
         index: 2
       },
       component: resolve => require(['@/pages/system/order/order-refund'], resolve)
+    },
+    {
+      path: '/system/order/detail',
+      name: 'order-detail',
+      meta: {
+        menu: 'order|order-detail',
+        name: '订单详情',
+        index: 3
+      },
+      component: resolve => require(['@/pages/system/order/order-detail'], resolve)
     }
   ]
 }

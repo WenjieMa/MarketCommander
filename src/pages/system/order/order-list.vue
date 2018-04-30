@@ -4,8 +4,8 @@
       <el-form-item label="订单id">
         <el-input v-model="formData.orderid" placeholder="订单id"></el-input>
       </el-form-item>
-      <el-form-item label="订单id">
-        <el-input v-model="formData.itemid" placeholder="订单id"></el-input>
+      <el-form-item label="单内商品id">
+        <el-input v-model="formData.itemid" placeholder="单内商品id"></el-input>
       </el-form-item>
       <el-form-item label="当前状态">
         <el-select v-model="formData.issended" placeholder="当前状态">
@@ -57,6 +57,9 @@
               <span>{{ props.row.orderstate }}</span>
             </el-form-item>
             <el-form-item label="操作">
+              <router-link :to="{path:'/system/order/detail', query:{itemId: props.row.id ,itemData: props.row}}">
+                <el-button type="primary">详情</el-button>
+              </router-link>
               <el-button type="primary" @click="onSubmit()">确认发货</el-button>
             </el-form-item>
           </el-form>
