@@ -1,6 +1,5 @@
 import components from './all-component'
 import util from './mixins/util'
-
 const utilsOption = {
   install(Vue, opts = {}) {
     Vue.mixin({
