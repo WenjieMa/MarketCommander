@@ -1,7 +1,11 @@
 <template>
   <div class="sidebar">
-    <el-menu :default-active="activeSide" class="el-menu-vertical-demo"  @select="handleSelect" @open="handleOpen" @close="handleClose">
-      <span v-show="this.$store.state.menu.nav == 'item'">
+    <el-menu :default-active="activeSide" class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen" @close="handleClose">
+      <span v-show="this.$store.state.menu.nav == 'home'">
+        <el-menu-item index="homepage">总览</el-menu-item>
+        <el-menu-item index="el-template">模块</el-menu-item>
+      </span>
+       <span v-show="this.$store.state.menu.nav == 'item'">
         <el-menu-item index="item-list">商品信息管理</el-menu-item>
         <el-menu-item index="item-import">进货管理</el-menu-item>
         <el-menu-item index="item-itemtype">商品分类管理</el-menu-item>
@@ -19,7 +23,7 @@
       </span>
       <span v-show="this.$store.state.menu.nav == 'operator'">
         <el-menu-item index="assistant-list">管理员列表</el-menu-item>
-        <el-menu-item index="assistant-edit">新增管理员</el-menu-item>
+        <el-menu-item index="role-list">权限管理</el-menu-item>
       </span>
       <span v-show="this.$store.state.menu.nav == 'main-page'">
         <el-menu-item index="hot-search">热词</el-menu-item>
@@ -33,13 +37,7 @@
       </span>
       <span v-show="this.$store.state.menu.nav == 'systeminfo'">
         <el-menu-item index="district-list">省市信息</el-menu-item>
-        <el-menu-item index="district-edit">省市录入</el-menu-item>
         <el-menu-item index="express-list">快递公司信息</el-menu-item>
-        <el-menu-item index="express-edit">快递公司录入</el-menu-item>
-      </span>
-      <span v-show="this.$store.state.menu.nav == 'role'">
-        <el-menu-item index="role-list">权限列表</el-menu-item>
-        <el-menu-item index="role2assistant">权限赋予</el-menu-item>
       </span>
     </el-menu>
   </div>
@@ -52,15 +50,13 @@
     },
     methods: {
       handleSelect(key, keyPath) {
-       this.activeIndex = key;
+        this.activeIndex = key;
         this.$router.push({
           name: key
         });
       },
-      handleOpen(key, keyPath) {
-      },
-      handleClose(key, keyPath) {
-      }
+      handleOpen(key, keyPath) {},
+      handleClose(key, keyPath) {}
     },
     computed: {
       activeSide() {

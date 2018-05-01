@@ -26,7 +26,7 @@ const mainPageRoute = {
         path: '/system/main-page/start-images-edit',
         name: 'start-images-edit',
         meta: {
-          menu: 'main-page|start-images-edit',
+          menu: 'main-page|start-images-list',
           name: '新增轮播图片',
           index: 3
         },
@@ -54,9 +54,9 @@ const mainPageRoute = {
       },
       {
         path: '/system/main-page/start-columns-detail',
-        name: 'start-columns',
+        name: 'start-columns-detail',
         meta: {
-          menu: 'main-page|start-columns-detail',
+          menu: 'main-page|start-columns',
           name: '二级栏目设置',
           index: 3
         },

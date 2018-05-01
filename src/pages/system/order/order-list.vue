@@ -13,6 +13,7 @@
           <el-option label="已发货" value="2"></el-option>
           <el-option label="未收货" value="3"></el-option>
           <el-option label="已收货" value="4"></el-option>
+          <el-option label="失效" value="-1"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="订单创建时间">
@@ -98,33 +99,6 @@
               name: '',
               quantity: ''
             }]
-          }]
-        },
-        datePickParam: {
-          shortcuts: [{
-            text: '最近一周',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: '最近一个月',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: '最近三个月',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit('pick', [start, end]);
-            }
           }]
         },
         formData: {

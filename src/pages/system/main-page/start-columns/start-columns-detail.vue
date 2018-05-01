@@ -22,6 +22,8 @@
         <template slot-scope="scope">
           <el-button type="primary" @click="moveOn(scope.row.id)" size="mini">
             <i class="el-icon-arrow-up"></i>上移</el-button>
+          <el-button type="danger" @click="moveOn(scope.row.id)" size="mini">
+            <i class="el-icon-delete"></i>删除</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -8,7 +8,6 @@ import itemRoute from './routes/system/item';
 import orderRoute from './routes/system/order';
 import assistantRoute from './routes/system/assistant';
 import operatorRoute from './routes/system/operator';
-import roleRoute from './routes/system/role';
 
 import store from '@/app-store/vuex';
 
@@ -21,9 +20,9 @@ const userrouter = {
 }
 
 const systemrouter = {
-  path: '/system/home',
-  name: 'system-home',
-  component: resolve => require(['@/pages/system/home'], resolve),
+  path: '/system/base',
+  name: 'system-base',
+  component: resolve => require(['@/pages/system/base'], resolve),
   children: [
     mainPageRoute,
     communicationRoute,
@@ -32,16 +31,35 @@ const systemrouter = {
     orderRoute,
     assistantRoute,
     operatorRoute,
-    roleRoute,
+    {
+      path: '/system/homepage',
+      name: 'homepage',
+      meta: {
+        menu: 'home|homepage',
+        name: '首页',
+        index: 1
+      },
+      component: resolve => require(['@/pages/system/home/homepage'], resolve)
+    },
     {
       path: '/system/el-template',
       name: 'el-template',
       meta: {
-        menu: 'home',
-        name: '首页',
-        index: 1
+        menu: 'home|el-template',
+        name: '模块',
+        index: 2
       },
-      component: resolve => require(['@/pages/el-template'], resolve)
+      component: resolve => require(['@/pages/system/home/el-template'], resolve)
+    },
+    {
+      path: '/system/info-update',
+      name: 'info-update',
+      meta: {
+        menu: 'info-update',
+        name: '个人信息修改',
+        index: 2
+      },
+      component: resolve => require(['@/pages/system/basic/info-update'], resolve)
     }
   ]
 }
@@ -107,11 +125,13 @@ router.beforeEach((to, from, next) => {
   if (to.path !== '/system/login' && to.path !== '/system/regist' && to.path !== '/system/forget-psw' && to.path !== '/user/login' && to.path !== '/user/regist' && to.path !== '/user/forget-psw') {
     isBase = false;
   }
-  // const menu = to.meta.nav ? to.meta.nav.split('|')[0] : '';
-  // console.log('menu:' + menu + '/userLogin:' + '/from:' + qs.stringify(from) + '/to.path:' + to.path);
-
   if (!isBase) {
-    store.dispatch('selectMenu', to.meta.menu || 'null|null');
+    if (to.meta.ischecked) {
+      store.dispatch('selectMenu', from.meta.menu || 'null|null');
+    } else {
+      store.dispatch('selectMenu', to.meta.menu || 'null|null');
+    }
+
     // console.log('系统nav:' + store.state.menu.nav + '系统side:' + store.state.menu.side);
 
     // 路由的面包屑导航管理

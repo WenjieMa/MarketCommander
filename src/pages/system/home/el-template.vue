@@ -585,65 +585,6 @@
         </el-collapse-item>
       </el-collapse>
     </div>
-    <div class="el-card">布局容器
-      <el-container>
-        <el-header>Header</el-header>
-        <el-main>Main</el-main>
-      </el-container>
-
-      <el-container>
-        <el-header>Header</el-header>
-        <el-main>Main</el-main>
-        <el-footer>Footer</el-footer>
-      </el-container>
-
-      <el-container>
-        <el-aside width="200px">Aside</el-aside>
-        <el-main>Main</el-main>
-      </el-container>
-
-      <el-container>
-        <el-header>Header</el-header>
-        <el-container>
-          <el-aside width="200px">Aside</el-aside>
-          <el-main>Main</el-main>
-        </el-container>
-      </el-container>
-
-      <el-container>
-        <el-header>Header</el-header>
-        <el-container>
-          <el-aside width="200px">Aside</el-aside>
-          <el-container>
-            <el-main>Main</el-main>
-            <el-footer>Footer</el-footer>
-          </el-container>
-        </el-container>
-      </el-container>
-
-      <el-container>
-        <el-aside width="200px">Aside</el-aside>
-        <el-container>
-          <el-header>Header</el-header>
-          <el-main>Main</el-main>
-        </el-container>
-      </el-container>
-
-      <el-container>
-        <el-aside width="200px">Aside</el-aside>
-        <el-container>
-          <el-header>Header</el-header>
-          <el-main>Main</el-main>
-          <el-footer>Footer</el-footer>
-        </el-container>
-      </el-container>
-    </div>
-    <div class="el-card"></div>
-    <div class="el-card"></div>
-    <div class="el-card"></div>
-    <div class="el-card"></div>
-    <div class="el-card"></div>
-    <div class="el-card"></div>
   </div>
 </template>
 <script>
@@ -1133,45 +1074,6 @@
 <style>
   .el-card {
     margin-bottom: 20px;
-  }
-
-  .el-header,
-  .el-footer {
-    background-color: #B3C0D1;
-    color: #333;
-    text-align: center;
-    line-height: 60px;
-  }
-
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-  }
-
-  .el-main {
-    background-color: #E9EEF3;
-    color: #333;
-    text-align: center;
-    line-height: 160px;
-  }
-
-  body>.el-container {
-    margin-bottom: 40px;
-  }
-
-  .el-container:nth-child(5) .el-aside,
-  .el-container:nth-child(6) .el-aside {
-    line-height: 260px;
-  }
-
-  .el-container:nth-child(7) .el-aside {
-    line-height: 320px;
-  }
-
-  .el-select .el-input {
-    width: 130px;
   }
 
   .input-with-select .el-input-group__prepend {

@@ -16,7 +16,7 @@ const communicationRoute = {
       path: '/system/communication/chat-detail',
       name: 'system-chat-detail',
       meta: {
-        menu: 'communication|system-chat-detail',
+        menu: 'communication|system-chat-list',
         name: '留言详情',
         index: 3
       },
@@ -36,7 +36,7 @@ const communicationRoute = {
       path: '/system/communication/comment-detail',
       name: 'system-comment-detail',
       meta: {
-        menu: 'communication|system-comment-detail',
+        menu: 'communication|system-comment-list',
         name: '评论详情',
         index: 3
       },

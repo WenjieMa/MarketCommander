@@ -40,7 +40,7 @@
     methods: {
       onLogin() {
         this.$router.push({
-          path: '/system/el-template',
+          path: '/system/homepage',
           param: {
             userid: 1
           }

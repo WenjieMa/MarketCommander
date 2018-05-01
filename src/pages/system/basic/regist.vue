@@ -17,6 +17,10 @@
             <el-form-item label="年龄" prop="age">
               <el-input v-model.number="ruleForm.age" placeholder="请输入年龄" auto-complete="off"></el-input>
             </el-form-item>
+            <el-form-item label="生日">
+              <el-date-picker v-model="ruleForm.birthday" type="date" placeholder="选择日期">
+              </el-date-picker>
+            </el-form-item>
             <el-form-item label="手机号" prop="phone">
               <el-input v-model.number="ruleForm.phone" @blur="judgePhone()" placeholder="请输入手机号" auto-complete="off"></el-input>
               <el-button type="primary" :loading="true" round plain disabled v-if="sending&&!isSended">正在发送验证码</el-button>
@@ -32,6 +36,9 @@
             </el-form-item>
             <el-form-item label="姓名" prop="name">
               <el-input v-model="ruleForm.name" placeholder="请输入姓名" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="管理员授权码" prop="systemcode">
+              <el-input v-model="ruleForm.systemcode" placeholder="请输入管理员授权码" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onRegistSubmit()">确认注册</el-button>
@@ -142,7 +149,9 @@
           phone: '',
           name: '',
           email: '',
-          phoneCheckIputNum: ''
+          birthday: '',
+          phoneCheckIputNum: '',
+          systemcode: ''
         },
         rules: {
           phoneCheckIputNum: [{

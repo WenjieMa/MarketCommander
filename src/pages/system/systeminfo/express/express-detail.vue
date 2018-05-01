@@ -2,33 +2,29 @@
   <div class="express-detail">
     <el-form :model="expressData" label-position="right" label-suffix="" label-width="150px">
       <el-col span="12">
-        <el-form-item label="快递公司id" v-if="!this.add">
+        <el-form-item label="快递公司id">
           {{expressData.id}}
         </el-form-item>
         <el-form-item label="快递公司">
-          <el-input v-model="expressData.expressname"> </el-input>
+          {{expressData.expressname}}
         </el-form-item>
         <el-form-item label="当前状态">
-          <el-input v-model="expressData.iseffective"> </el-input>
-        </el-form-item>
-        <el-form-item label="公司接入点地址">
-          <el-input v-model="expressData.adress"> </el-input>
+          {{expressData.iseffective}}
         </el-form-item>
       </el-col>
       <el-col span="12">
+        <el-form-item label="公司接入点地址">
+          {{expressData.adress}}
+        </el-form-item>
         <el-form-item label="联系人姓名">
-          <el-input v-model="expressData.contactname"> </el-input>
+          {{expressData.contactname}}
         </el-form-item>
         <el-form-item label="联系人电话">
-          <el-input v-model="expressData.phone"> </el-input>
+          {{expressData.phone}}
         </el-form-item>
-        <el-form-item>
-          <el-button type="success">确认</el-button>
-          <router-link v-if="!add" :to="{path:'/system/systeminfo/express/express-detail', query:{expressId: expressData.id ,expressData: expressData}}">
-            <el-button type="primary">返回</el-button>
-          </router-link>
-          <router-link v-if="add" :to="{path:'/system/systeminfo/express/express-list'}">
-            <el-button type="primary">返回</el-button>
+        <el-form-item label="操作">
+          <router-link :to="{path:'/system/systeminfo/express/express-edit', query:{expressId: expressData.id ,expressData: expressData}}">
+            <el-button type="primary">编辑</el-button>
           </router-link>
         </el-form-item>
       </el-col>
@@ -40,8 +36,8 @@
     name: 'express-detail',
     data() {
       return {
-        add: this.$route.query.add || false,
-        expressData: this.$route.query.expressData || {
+        expressid: this.$route.query.id || -1,
+        expressData: {
           id: '测试数据',
           expressname: '测试数据',
           iseffective: '测试数据',

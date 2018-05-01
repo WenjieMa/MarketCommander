@@ -46,7 +46,6 @@
               <el-switch :content="'当前状态:' " v-model="props.row.iseffective" active-color="#13ce66" inactive-color="#ff4949" :change="changeEffective(`${props.row.iseffective}`)">
               </el-switch>
             </el-form-item>
-
             <el-form-item label="操作">
               <router-link :to="{path:'/system/item/edit', query:{itemId: props.row.id ,itemData: props.row}}">
                 <el-button type="primary">编辑</el-button>

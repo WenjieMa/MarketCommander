@@ -26,7 +26,8 @@ const orderRoute = {
       path: '/system/order/detail',
       name: 'order-detail',
       meta: {
-        menu: 'order|order-detail',
+        menu: 'order',
+        ischecked: true,
         name: '订单详情',
         index: 3
       },

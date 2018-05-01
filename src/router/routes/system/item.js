@@ -16,7 +16,7 @@ const itemRoute = {
       path: '/system/item/edit',
       name: 'item-edit',
       meta: {
-        menu: 'item|item-edit',
+        menu: 'item|item-list',
         name: '商品编辑',
         index: 3
       },
