@@ -1142,12 +1142,10 @@
 
   .left {
     float: left;
-    width: 60px;
   }
 
   .right {
     float: right;
-    width: 60px;
   }
 
   .bottom {
