@@ -8,18 +8,19 @@
             <el-form-item label="账号:" prop="username">
               <el-input type="text" v-model="ruleForm.username" placeholder="请输入账号" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="pass">
-              <el-input type="password" v-model="ruleForm.pass" placeholder="请输入密码" auto-complete="off"></el-input>
+            <el-form-item label="密码" prop="password">
+              <el-input type="password" v-model="ruleForm.password" placeholder="请输入密码" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="确认密码" prop="checkPass">
-              <el-input type="password" v-model="ruleForm.checkPass" placeholder="请再次输入密码" auto-complete="off"></el-input>
+            <el-form-item label="确认密码" prop="checkpassword">
+              <el-input type="password" v-model="ruleForm.checkpassword" placeholder="请再次输入密码" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="年龄" prop="age">
-              <el-input v-model.number="ruleForm.age" placeholder="请输入年龄" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="生日">
-              <el-date-picker v-model="ruleForm.birthday" type="date" placeholder="选择日期">
-              </el-date-picker>
+            <el-form-item label="性别" prop="gender">
+              <el-select v-model="ruleForm.gender" placeholder="请选择">
+                <el-option :label="'男'" :value="'1'">
+                </el-option>
+                <el-option :label="'女'" :value="'0'">
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="手机号" prop="phone">
               <el-input v-model.number="ruleForm.phone" @blur="judgePhone()" placeholder="请输入手机号" auto-complete="off"></el-input>
@@ -31,14 +32,8 @@
             <el-form-item label="验证码" prop="phoneCheckIputNum" v-if="isSended">
               <el-input v-model.number="ruleForm.phoneCheckIputNum" placeholder="在此输入验证码" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="邮箱" prop="email">
-              <el-input v-model="ruleForm.email" placeholder="请输入邮箱" auto-complete="off"></el-input>
-            </el-form-item>
             <el-form-item label="姓名" prop="name">
               <el-input v-model="ruleForm.name" placeholder="请输入姓名" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="管理员授权码" prop="systemcode">
-              <el-input v-model="ruleForm.systemcode" placeholder="请输入管理员授权码" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onRegistSubmit()">确认注册</el-button>
@@ -53,42 +48,27 @@
   </div>
 </template>
 <script>
-  import qcloudsms from '@/utils/qcloudsms.js';
+  // import qcloudsms from '@/utils/qcloudsms.js';
+  import basic from '../../../services/basic'
   export default {
     name: 'regist',
     data() {
-      var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('年龄不能为空'));
-        }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
-      }
-      var validatePass = (rule, value, callback) => {
+      var validatepassword = (rule, value, callback) => {
         if (value == '') {
           callback(new Error('请输入密码'));
         } else if (value.length > 25 || value.length < 6) {
           callback(new Error('请确保密码长度为6-25位!'));
         } else {
-          if (this.ruleForm.checkPass != '') {
-            this.$refs.ruleForm.validateField('checkPass');
+          if (this.ruleForm.checkpassword != '') {
+            this.$refs.ruleForm.validateField('checkpassword');
           }
           callback();
         }
       }
-      var validatePass2 = (rule, value, callback) => {
+      var validatepassword2 = (rule, value, callback) => {
         if (value == '') {
           callback(new Error('请再次输入密码'));
-        } else if (value != this.ruleForm.pass) {
+        } else if (value != this.ruleForm.password) {
           callback(new Error('两次输入密码不一致!'));
         } else {
           callback();
@@ -116,16 +96,6 @@
           callback();
         }
       }
-      var validateEmail = (rule, value, callback) => {
-        const emalRegex = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/i;
-        if (value == '') {
-          callback(new Error('请输入邮箱'));
-        } else if (!emalRegex.test(value)) {
-          callback(new Error('请确保邮箱格式正确!'));
-        } else {
-          callback();
-        }
-      }
       var validatePhoneCheckIputNum = (rule, value, callback) => {
         if (value == '') {
           callback(new Error('请输入验证码！'));
@@ -142,16 +112,13 @@
         sending: false,
         phoneCheckNum: '',
         ruleForm: {
-          username: '',
-          pass: '',
-          checkPass: '',
-          age: '',
-          phone: '',
-          name: '',
-          email: '',
-          birthday: '',
-          phoneCheckIputNum: '',
-          systemcode: ''
+          username: '123456',
+          password: '123456',
+          checkpassword: '123456',
+          gender: '1',
+          phone: '15273202288',
+          name: '123456',
+          phoneCheckIputNum: ''
         },
         rules: {
           phoneCheckIputNum: [{
@@ -162,45 +129,35 @@
             validator: validatePhone,
             trigger: 'blur'
           }],
-          email: [{
-            validator: validateEmail,
-            trigger: 'blur'
-          }],
           username: [{
             validator: validateUsername,
             trigger: 'blur'
           }],
-          pass: [{
-            validator: validatePass,
+          password: [{
+            validator: validatepassword,
             trigger: 'blur'
           }],
-          checkPass: [{
-            validator: validatePass2,
-            trigger: 'blur'
-          }],
-          age: [{
-            validator: checkAge,
+          checkpassword: [{
+            validator: validatepassword2,
             trigger: 'blur'
           }]
         }
       }
     },
     methods: {
-      onRegistSubmit() {
-
-      },
       onBack() {
         this.$router.go(-1);
       },
       onSendMsg() {
         this.sending = true;
-        this.phoneCheckNum = qcloudsms.send(this.ruleForm.phone, this.callbackFunc);
-        console.log(this.phoneCheckNum);
-        if (this.phoneCheckNum != '') {
-          this.isSended = true;
-        } else {
-          this.isSended = false;
-        }
+        // this.phoneCheckNum = qcloudsms.send(this.ruleForm.phone, this.callbackFunc);
+        // console.log(this.phoneCheckNum);
+        // if (this.phoneCheckNum != '') {
+        //   this.isSended = true;
+        // } else {
+        //   this.isSended = false;
+        // }
+        this.isSended = true;
       },
       callbackFunc(err, res, resData) {
         if (err) {
@@ -234,6 +191,34 @@
         if (this.phoneCheckNum != this.ruleForm.phoneCheckIputNum) {
 
         }
+      },
+      onRegistSubmit() {
+        this.$loading = true;
+        const params = {
+          id: '',
+          username: this.ruleForm.username,
+          password: this.ruleForm.password,
+          gender: this.ruleForm.gender,
+          phone: this.ruleForm.phone,
+          name: this.ruleForm.name
+        }
+        basic.regist(params).then(json => {
+          this.$loading = false;
+          this.$router.push({
+            path: '/system/homepage',
+            param: {
+              userid: 1
+            }
+          });
+        }).catch(err => {
+          err = '';
+          this.$message({
+            showClose: true,
+            message: '信息填写错误',
+            type: 'error'
+          });
+          this.$loading = false;
+        })
       }
     }
   }

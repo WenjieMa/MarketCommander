@@ -1,5 +1,6 @@
 import components from './all-component'
 import util from './mixins/util'
+import store from './vuex'
 const utilsOption = {
   install(Vue, opts = {}) {
     Vue.mixin({
@@ -10,6 +11,15 @@ const utilsOption = {
     components.forEach(function (component, index) {
       Vue.component(component.name, component);
     });
+    Vue.prototype.$loading = {
+      active: store.state.active,
+      show(s) {
+        store.commit('show', s);
+      },
+      hide() {
+        store.commit('hide');
+      }
+    };
   }
 };
 

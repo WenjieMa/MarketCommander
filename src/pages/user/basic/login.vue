@@ -39,7 +39,7 @@
     methods: {
       onLogin() {
         this.$router.push({
-          path: '/system/home',
+          path: '/user/home',
           param: {
             userid: 1
           }

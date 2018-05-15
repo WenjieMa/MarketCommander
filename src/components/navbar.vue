@@ -33,7 +33,7 @@
         <template slot="title">超级管理员</template>
       </el-menu-item>
       <div class="navbar-userctl">
-        {{this.$store.state.user.info.name}}
+        {{"欢迎," + this.$store.state.user.info.name}}
         <div class="navbar-dropdown">
           <router-link :to="{path: '/system/info-update'}">
             个人设置

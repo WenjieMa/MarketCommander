@@ -37,6 +37,18 @@ const store = new Vuex.Store({
     },
     changeRoute(state, routeList) {
       state.routeList = routeList;
+    },
+    show(state, s) {
+      clearTimeout(state.loading.timer);
+      state.loading.active = true;
+      if (s) {
+        setTimeout(() => {
+          state.loading.active = false;
+        }, s * 1000);
+      }
+    },
+    hide(state) {
+      state.loading.active = false;
     }
   },
   actions: {

@@ -27,24 +27,46 @@
   </div>
 </template>
 <script>
+  import basic from '../../../services/basic'
   export default {
     name: 'login',
     data() {
       return {
         formValues: {
-          username: '',
-          password: ''
+          username: '123456',
+          password: '123456'
         }
       }
     },
     methods: {
       onLogin() {
-        this.$router.push({
-          path: '/system/homepage',
-          param: {
-            userid: 1
+        this.$loading = true;
+        const params = {
+          username: this.formValues.username,
+          password: this.formValues.password
+        }
+        basic.login(params).then(json => {
+          this.$loading = false;
+          this.$store.state.user = {
+            correct: true,
+            info: {
+              userid: json.data.id,
+              name: json.data.name
+            }
           }
-        });
+          console.log(json);
+          this.$router.push({
+            name: 'system-homepage'
+          });
+        }).catch(err => {
+          err = '';
+          this.$message({
+            showClose: true,
+            message: '用户名不存在或者密码错误！',
+            type: 'error'
+          });
+          this.$loading = false;
+        })
       }
     }
   }

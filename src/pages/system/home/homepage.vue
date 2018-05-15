@@ -1,6 +1,7 @@
 <template>
   <div class="homepage">
     <el-form :inline="true" :model="formData" class="demo-form-inline">
+      {{testValue}}
       <el-form-item label="时间段">
         {{formData.createdate}}
         <el-date-picker v-model="formData.createdate" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期"
@@ -54,6 +55,7 @@
     name: 'homepage',
     data() {
       return {
+        testValue: '',
         formData: {
           orderid: '',
           itemid: '',
@@ -74,7 +76,6 @@
     },
     methods: {
       fetchData() {
-
       },
       onSubmit() {
 
