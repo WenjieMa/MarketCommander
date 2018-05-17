@@ -27,7 +27,7 @@
   </div>
 </template>
 <script>
-  import basic from '../../../services/basic'
+  import basic from '@/services/basic'
   export default {
     name: 'login',
     data() {
@@ -47,19 +47,25 @@
         }
         basic.login(params).then(json => {
           this.$loading = false;
-          this.$store.state.user = {
+          this.$store.state.operator = {
             correct: true,
             info: {
-              userid: json.data.id,
-              name: json.data.name
+              operid: json.data.infoOperator.id,
+              name: json.data.infoOperator.name
             }
           }
-          console.log(json);
+          var rolestr = '';
+          json.data.infoRoles.forEach(element => {
+            rolestr = rolestr + '-' + element.rolecode;
+          });
+          rolestr = rolestr.substring(1);
+          this.$store.state.roletree = rolestr;
+          console.log('当前role为' + this.$store.state.roletree);
           this.$router.push({
             name: 'system-homepage'
           });
         }).catch(err => {
-          err = '';
+          console.log(err);
           this.$message({
             showClose: true,
             message: '用户名不存在或者密码错误！',

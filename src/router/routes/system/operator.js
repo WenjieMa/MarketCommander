@@ -18,7 +18,7 @@ const operatorRoute = {
       meta: {
         menu: 'operator|assistant-list',
         name: '管理员信息详情',
-        index: 2
+        index: 3
       },
       component: resolve => require(['@/pages/system/operator/assistant-detail'], resolve)
     },
@@ -28,7 +28,7 @@ const operatorRoute = {
       meta: {
         menu: 'operator|assistant-list',
         name: '编辑管理员信息',
-        index: 3
+        index: 4
       },
       component: resolve => require(['@/pages/system/operator/assistant-edit'], resolve)
     },
@@ -57,10 +57,20 @@ const operatorRoute = {
       name: 'role2assistant',
       meta: {
         menu: 'operator|role-list',
-        name: '权限赋予',
+        name: '权限下人员查看',
         index: 4
       },
       component: resolve => require(['@/pages/system/operator/role/role2assistant'], resolve)
+    },
+    {
+      path: '/system/operator/role/role2assistant-add',
+      name: 'role2assistant-add',
+      meta: {
+        menu: 'operator|role-list',
+        name: '权限赋予',
+        index: 5
+      },
+      component: resolve => require(['@/pages/system/operator/role/role2assistant-add'], resolve)
     }
   ]
 }

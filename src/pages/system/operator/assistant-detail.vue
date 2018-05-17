@@ -1,42 +1,36 @@
 <template>
   <div class="assistant-detail">
     <el-form :model="assistantData" label-position="right" label-suffix="" label-width="150px">
-      <el-col span="12">
-        <el-form-item label="管理员头像">
-          <img :src="assistantData.headpic" />
-        </el-form-item>
+      <el-col :span="12">
         <el-form-item label="管理员id">
           {{assistantData.id}}
         </el-form-item>
         <el-form-item label="管理员账号">
-          {{assistantData.assistantname}}
+          {{assistantData.username}}
         </el-form-item>
         <el-form-item label="管理员性别">
-          {{assistantData.gender}}
-        </el-form-item>
-        <el-form-item label="当前状态">
-          {{assistantData.iseffective}}
+          {{toGender(assistantData.gender)}}
         </el-form-item>
         <el-form-item label="手机号">
           {{assistantData.phone}}
         </el-form-item>
-        <el-form-item label="email">
-          {{assistantData.email}}
-        </el-form-item>
-      </el-col>
-      <el-col span="12">
-        <el-form-item label="昵称">
-          {{assistantData.nickname}}
-        </el-form-item>
-        <el-form-item label="真实姓名">
+        <el-form-item label="姓名">
           {{assistantData.name}}
         </el-form-item>
-        <el-form-item label="生日">
-          {{assistantData.birthday}}
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="创建时间">
+          {{assistantData.createdate}}
+        </el-form-item>
+        <el-form-item label="上一次修改时间">
+          {{assistantData.updatedate}}
         </el-form-item>
         <el-form-item label="操作">
-          <router-link :to="{path:'/system/operator/assistant-edit', query:{assistantId: assistantData.id ,assistantData: assistantData}}">
+          <router-link :to="{path:'/system/operator/assistant-edit', query:{assistantData: assistantData}}">
             <el-button type="primary">编辑</el-button>
+          </router-link>
+          <router-link :to="{path:'/system/operator/assistant-list'}">
+            <el-button type="primary">返回</el-button>
           </router-link>
         </el-form-item>
       </el-col>
@@ -48,35 +42,10 @@
     name: 'assistant-detail',
     data() {
       return {
-        assistantid: this.$route.query.id || -1,
-        assistantData: {
-          id: '测试数据',
-          assistantname: '测试数据',
-          headpic: 'headpic',
-          gender: '测试数据',
-          iseffective: '测试数据',
-          phone: '测试数据',
-          email: '测试数据',
-          nickname: '测试数据',
-          name: '测试数据',
-          birthday: '测试数据'
-        }
+        assistantData: this.$route.query.assistantData
       }
     },
-    methods: {
-      fetchData(id = '-1') {
-        if (id > 0) {
-
-        }
-      },
-      onSubmit() {
-
-      }
-    },
-    created() {
-      this.fetchData(this.itemid);
-    }
-
+    methods: {}
   }
 
 </script>

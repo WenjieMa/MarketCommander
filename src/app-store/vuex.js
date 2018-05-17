@@ -12,12 +12,10 @@ const store = new Vuex.Store({
     user: {
       correct: false,
       info: {
-        userid: '1',
+        operid: '1',
         name: '测试管理员'
       },
-      roleTree: {
-
-      }
+      roleTree: []
     },
     menu: {
       nav: null,

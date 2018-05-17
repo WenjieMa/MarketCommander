@@ -23,14 +23,24 @@ const itemRoute = {
       component: resolve => require(['@/pages/system/item/item-edit'], resolve)
     },
     {
+      path: '/system/item/import/list',
+      name: 'item-import-list',
+      meta: {
+        menu: 'item|item-import',
+        name: '进货记录',
+        index: 2
+      },
+      component: resolve => require(['@/pages/system/item/import/import-infolist'], resolve)
+    },
+    {
       path: '/system/item/import',
       name: 'item-import',
       meta: {
         menu: 'item|item-import',
         name: '进货',
-        index: 2
+        index: 3
       },
-      component: resolve => require(['@/pages/system/item/import/item-import-infolist'], resolve)
+      component: resolve => require(['@/pages/system/item/import/import'], resolve)
     },
     {
       path: '/system/item/itemtype',
@@ -41,6 +51,16 @@ const itemRoute = {
         index: 2
       },
       component: resolve => require(['@/pages/system/item/itemtype/itemtype-list'], resolve)
+    },
+    {
+      path: '/system/item/itemtype-add',
+      name: 'item-itemtype-add',
+      meta: {
+        menu: 'item|item-itemtype',
+        name: '添加种类',
+        index: 3
+      },
+      component: resolve => require(['@/pages/system/item/itemtype/itemtype-add'], resolve)
     }
   ]
 }

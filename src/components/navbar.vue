@@ -5,35 +5,32 @@
       <el-menu-item index="/system/homepage">
         <template slot="title"> 首页</template>
       </el-menu-item>
-      <el-menu-item index="/system/item/list">
+      <el-menu-item index="/system/item/list"  v-if="utils.roletree.indexOf('1')!=-1">
         <template slot="title">
           <i class="el-icon-goods"></i>商品中心
         </template>
       </el-menu-item>
-      <el-menu-item index="/system/order/list">
+      <el-menu-item index="/system/order/list"  v-if="utils.roletree.indexOf('2')!=-1">
         <template slot="title">
           <i class="el-icon-tickets"></i>
           订单中心
         </template>
       </el-menu-item>
-      <el-menu-item index="/system/communication/chat-list">
+      <el-menu-item index="/system/communication/chat-list"  v-if="utils.roletree.indexOf('3')!=-1">
         <template slot="title">
           <i class="el-icon-message"></i>沟通中心</template>
       </el-menu-item>
-      <el-menu-item index="/system/assistant/list">
+      <el-menu-item index="/system/assistant/list"  v-if="utils.roletree.indexOf('4')!=-1">
         <template slot="title">用户信息中心</template>
       </el-menu-item>
-      <el-menu-item index="/system/main-page/hot-search">
+      <el-menu-item index="/system/main-page/hot-search"  v-if="utils.roletree.indexOf('5')!=-1">
         <template slot="title">营销中心</template>
       </el-menu-item>
-      <el-menu-item index="/system/systeminfo/district/district-list">
-        <template slot="title">系统数据中心</template>
-      </el-menu-item>
-      <el-menu-item index="/system/operator/assistant-list">
+      <el-menu-item index="/system/operator/assistant-list"  v-if="utils.roletree.indexOf('7')!=-1">
         <template slot="title">超级管理员</template>
       </el-menu-item>
       <div class="navbar-userctl">
-        {{"欢迎," + this.$store.state.user.info.name}}
+        {{"欢迎," + this.$store.state.operator.info.name}}
         <div class="navbar-dropdown">
           <router-link :to="{path: '/system/info-update'}">
             个人设置
@@ -61,14 +58,14 @@
         const logoutinfo = {
           correct: false,
           info: {
-            userid: '',
+            operid: '',
             name: ''
           },
           roleTree: {
 
           }
         }
-        this.$store.state.user = logoutinfo;
+        this.$store.state.operator = logoutinfo;
         this.$router.push({
           path: '/system/login'
         });

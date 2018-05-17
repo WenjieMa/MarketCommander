@@ -1,7 +1,6 @@
 
 import mainPageRoute from './system/main-page';
 import communicationRoute from './system/communication';
-import systeminfoRoute from './system/systeminfo';
 import itemRoute from './system/item';
 import orderRoute from './system/order';
 import assistantRoute from './system/assistant';
@@ -14,7 +13,6 @@ const systemRouter = {
   children: [
     mainPageRoute,
     communicationRoute,
-    systeminfoRoute,
     itemRoute,
     orderRoute,
     assistantRoute,

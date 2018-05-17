@@ -7,7 +7,7 @@
       </span>
        <span v-show="this.$store.state.menu.nav == 'item'">
         <el-menu-item index="item-list">商品信息管理</el-menu-item>
-        <el-menu-item index="item-import">进货管理</el-menu-item>
+        <el-menu-item index="item-import-list">进货管理</el-menu-item>
         <el-menu-item index="item-itemtype">商品分类管理</el-menu-item>
       </span>
       <span v-show="this.$store.state.menu.nav == 'communication'">

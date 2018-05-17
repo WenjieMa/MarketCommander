@@ -1,23 +1,15 @@
 <template>
-  <div class="start-images-list">
-    <router-link :to="{path:'/system/main-page/start-images-edit'}">
-      <el-button type="success">新增图片</el-button>
-    </router-link>
-    <el-table :data="datas.imageData" style="width: 100%">
-      <el-table-column label="图片">
-        <template slot-scope="scope">
-          <img :src="scope.row.src" />
-        </template>
+  <div class="assistant-list">
+    <el-table :data="datas.userData" style="width: 100%">
+      <el-table-column label="管理员 ID" prop="id">
       </el-table-column>
-      <el-table-column label="链接" prop="link">
+      <el-table-column label="管理员昵称" prop="name">
+      </el-table-column>
+      <el-table-column label="手机号" prop="phone">
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <router-link :to="{path:'/system/main-page/start-images-edit', query:{imageData:scope.row}}">
-            <el-button type="success" size="mini">编辑</el-button>
-          </router-link>
-          <el-button type="danger" @click="deleteData(scope.row.id)" size="mini">
-            <i class="el-icon-delete"></i>删除</el-button>
+          <el-button type="success" @click="grant(scope.row)">赋予</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -25,35 +17,56 @@
   </div>
 </template>
 <script>
-  import image from '@/services/system/main-page/image'
+  import role from '@/services/system/role'
   export default {
-    name: 'start-images-list',
+    name: 'assistant-list',
     data() {
       return {
-        datas: {
-          imageData: []
+        roleData: this.$route.query.roleData || {
+          id: '1',
+          name: '测试数据'
         },
         pageInfo: {
           page: 1,
           pages: 1,
           size: 10,
           total: 1
+        },
+        datas: {
+          userData: [{
+            id: '1',
+            name: '测试管理员',
+            phone: '15273202288',
+            iseffective: '1'
+          }, {
+            id: '2',
+            name: '测试管理员',
+            phone: '15273202288',
+            iseffective: '1'
+          }, {
+            id: '3',
+            name: '测试管理员',
+            phone: '15273202288',
+            iseffective: '1'
+          }]
         }
       }
     },
     methods: {
-      deleteData(id) {
+      grant(oper) {
         const params = {
-          id: id + ''
+          assistantid: oper.id,
+          roleid: this.roleData.id
         }
-        image.delete(params).then(json => {
+        role.insertRole2Assistant(params).then(json => {
           console.log(json);
           this.fetchData();
           this.$message({
             showClose: true,
-            message: '删除成功！',
+            message: '更新成功!',
             type: 'success'
           });
+          this.$loading = false;
         }).catch(err => {
           console.log(err);
           this.$message({
@@ -61,18 +74,20 @@
             message: '系统出错！',
             type: 'error'
           });
+          this.$loading = false;
         })
       },
       fetchData() {
         this.$loading = true;
         const params = {
+          roleid: this.roleData.id,
           page: this.pageInfo.page,
           size: this.pageInfo.size
         }
-        image.findall(params).then(json => {
+        role.findallRole2AssistantNone(params).then(json => {
           console.log(json);
           this.$loading = false;
-          this.datas.imageData = json.data;
+          this.datas.userData = json.data;
           this.pageInfo.pages = json.pages;
           this.pageInfo.total = json.total;
         }).catch(err => {
@@ -84,9 +99,6 @@
           });
           this.$loading = false;
         })
-      },
-      onSubmit() {
-        this.insertData();
       },
       changeSize(size) {
         this.pageInfo.size = size;

@@ -1,47 +1,65 @@
 <template>
-  <div class="itemtype-list">
+  <div class="item">
     <el-form :inline="true" :model="formData" class="demo-form-inline">
-      <el-form-item label="种类名称">
-        <el-input v-model="formData.typename" placeholder="商品种类名称"></el-input>
+      <el-form-item label="商品id">
+        <el-input v-model="formData.id" placeholder="商品id"></el-input>
+      </el-form-item>
+      <el-form-item label="进货时间">
+        {{formData.imdate}}
+        <el-date-picker v-model="formData.imdate" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期"
+          end-placeholder="结束日期" :picker-options="datePickParam">
+        </el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
-      <el-form-item>
-        <router-link :to="{path:'/system/item/itemtype-add', query:{}}">
-          <el-button type="success">新增</el-button>
-        </router-link>
-      </el-form-item>
     </el-form>
-    <el-table :data="datas.itemData" style="width: 100%">
+    <el-table :data="datas.importData" style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="table-expand">
-            <el-form-item label="种类名称">
-              <el-input v-model="formData.newtypename" placeholder="种类名称"></el-input>
+            <el-form-item label="商品 ID">
+              <span>{{ props.row.itemid }}</span>
             </el-form-item>
-            <el-form-item label="操作">
-              <el-button type="success" @click="onUpdate(props.row)">确认修改</el-button>
+            <el-form-item label="进货价格">
+              <span>{{ props.row.imprice }}</span>
+            </el-form-item>
+            <el-form-item label="进货量">
+              <span>{{ props.row.amount }}</span>
+            </el-form-item>
+            <el-form-item label="供货商">
+              <span>{{ props.row.supplier }}</span>
+            </el-form-item>
+            <el-form-item label="总价">
+              <span>{{ props.row.amount * props.row.imprice }}</span>
+            </el-form-item>
+            <el-form-item label="进货时间">
+              <span>{{ props.row.createdate }}</span>
             </el-form-item>
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column label="种类 ID" prop="id">
+      <el-table-column label="商品 ID" prop="itemid">
       </el-table-column>
-      <el-table-column label="种类名称" prop="typename">
+      <el-table-column label="进货时间" prop="createdate">
+      </el-table-column>
+      <el-table-column label="供货商" prop="supplier">
+      </el-table-column>
+      <el-table-column label="进货量" prop="amount">
       </el-table-column>
     </el-table>
     <pager v-if="pageInfo" :currentPage="pageInfo.page" :total="pageInfo.total" :pagesize="pageInfo.size"></pager>
   </div>
 </template>
 <script>
-  import itemtype from '@/services/system/itemtype';
+  import item from '@/services/system/item';
   export default {
-    name: 'itemtype-list',
+    name: 'item',
     data() {
       return {
         formData: {
-          typename: ''
+          id: '',
+          imdate: ''
         },
         pageInfo: {
           page: 1,
@@ -50,16 +68,7 @@
           total: 1
         },
         datas: {
-          itemData: [{
-            id: '1',
-            typename: '测试商品'
-          }, {
-            id: '2',
-            typename: '测试商品'
-          }, {
-            id: '3',
-            typename: '测试商品'
-          }]
+          importData: []
         }
       }
     },
@@ -67,18 +76,18 @@
       fetchData() {
         this.$loading = true;
         const params = {
-          typename: this.formData.typename,
+          id: this.formData.id,
+          imdate: this.formData.imdate,
           page: this.pageInfo.page,
           size: this.pageInfo.size
         }
-        if (params.typename) {
-          itemtype.findbyname(params).then(json => {
+        if (params.id && params.imdate) {
+          item.findimportyname(params).then(json => {
             console.log(json);
             this.$loading = false;
-            this.datas.itemData = json.data;
+            this.datas.importData = json.data;
             this.pageInfo.pages = json.pages;
             this.pageInfo.total = json.total;
-            console.log('total' + this.pageInfo.total + 'pages' + this.pageInfo.pages);
           }).catch(err => {
             console.log(err);
             this.$message({
@@ -89,10 +98,10 @@
             this.$loading = false;
           })
         } else {
-          itemtype.findall(params).then(json => {
+          item.findallimport(params).then(json => {
             console.log(json);
             this.$loading = false;
-            this.datas.itemData = json.data;
+            this.datas.importData = json.data;
             this.pageInfo.pages = json.pages;
             this.pageInfo.total = json.total;
             console.log('total' + this.pageInfo.total + 'pages' + this.pageInfo.pages);
@@ -117,25 +126,6 @@
       changePage(page) {
         this.pageInfo.page = page;
         this.fetchData();
-      },
-      onUpdate(obj) {
-        obj.typename = this.formData.newtypename;
-        itemtype.update(obj).then(json => {
-          console.log(json);
-          this.$message({
-            showClose: true,
-            message: '修改成功！',
-            type: 'success'
-          });
-        }).catch(err => {
-          console.log(err);
-          this.$message({
-            showClose: true,
-            message: '系统出错！',
-            type: 'error'
-          });
-          this.$loading = false;
-        })
       }
     },
     created() {

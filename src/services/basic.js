@@ -1,4 +1,4 @@
-import axios from '../app-store/axios'
+import axios from '@/app-store/axios'
 
 export default {
   login(params) {

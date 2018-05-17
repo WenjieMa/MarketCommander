@@ -1,4 +1,6 @@
 import store from '../vuex'
+import moment from 'moment';
+
 export default {
   methods: {
     isNull(obj) {
@@ -16,6 +18,18 @@ export default {
         return (value / 100).toFixed(0).toString();
       }
       return 0;
+    },
+    timeFormat(time, format = 'YYYY-MM-DD HH:mm:ss') {
+      return moment(time).format(format);
+    },
+    toGender(num) {
+      return num == 0 ? '女' : '男';
+    },
+    strToArray(str) {
+      if (!str) {
+        return [];
+      }
+      return str.split('-');
     }
   },
   computed: {

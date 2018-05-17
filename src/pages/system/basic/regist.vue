@@ -16,9 +16,9 @@
             </el-form-item>
             <el-form-item label="性别" prop="gender">
               <el-select v-model="ruleForm.gender" placeholder="请选择">
-                <el-option :label="'男'" :value="'1'">
+                <el-option :label="'男'" :value="1">
                 </el-option>
-                <el-option :label="'女'" :value="'0'">
+                <el-option :label="'女'" :value="0">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -115,7 +115,7 @@
           username: '123456',
           password: '123456',
           checkpassword: '123456',
-          gender: '1',
+          gender: 1,
           phone: '15273202288',
           name: '123456',
           phoneCheckIputNum: ''
@@ -205,13 +205,10 @@
         basic.regist(params).then(json => {
           this.$loading = false;
           this.$router.push({
-            path: '/system/homepage',
-            param: {
-              userid: 1
-            }
+            path: '/system/login'
           });
         }).catch(err => {
-          err = '';
+          console.log(err);
           this.$message({
             showClose: true,
             message: '信息填写错误',
