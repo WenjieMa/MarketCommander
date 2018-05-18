@@ -9,13 +9,23 @@ const store = new Vuex.Store({
       active: false,
       timer: null
     },
-    user: {
+    operator: {
       correct: false,
       info: {
         operid: '1',
         name: '测试管理员'
       },
       roleTree: []
+    },
+    user: {
+      correct: false,
+      info: {
+        id: '1',
+        nickname: '测试用户'
+      },
+      shopcart: {
+
+      }
     },
     menu: {
       nav: null,

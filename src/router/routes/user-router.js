@@ -1,29 +1,24 @@
-// import operatorRoute from './user/operator';
+import goodsRoute from './user/goods';
+import shopcartRoute from './user/shopcart';
+import personinfoRoute from './user/personinfo';
 
 const userRouter = {
   path: '/user/home',
   name: 'user-home',
   component: resolve => require(['@/pages/user/home'], resolve),
   children: [
+    shopcartRoute,
+    personinfoRoute,
     {
-      path: '/user/homepage',
-      name: 'user-homepage',
+      path: '/user/market',
+      name: 'user-market',
       meta: {
-        menu: 'home|homepage',
+        menu: 'home|user-market',
         name: '首页',
         index: 1
       },
-      component: resolve => require(['@/pages/user/home/homepage'], resolve)
-    },
-    {
-      path: '/user/info-update',
-      name: 'info-update',
-      meta: {
-        menu: 'info-update',
-        name: '个人信息修改',
-        index: 2
-      },
-      component: resolve => require(['@/pages/user/basic/info-update'], resolve)
+      component: resolve => require(['@/pages/user/home/market'], resolve),
+      children: goodsRoute
     }
   ]
 }

@@ -206,6 +206,7 @@
     },
     created() {
       this.fetchData();
+      this.fetchTypeData();
     }
   }
 

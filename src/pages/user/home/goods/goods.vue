@@ -1,11 +1,11 @@
 <template>
-  <div class="moban">
+  <div class="goods">
     <router-view></router-view>
   </div>
 </template>
 <script>
 export default {
-  name: 'moban',
+  name: 'goods',
   data () {
     return {
       data: {

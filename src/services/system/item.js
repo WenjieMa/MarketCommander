@@ -1,4 +1,4 @@
-import axios from '@/app-store/axios'
+import axios from '@/app/axios'
 
 export default {
   insert(params) {

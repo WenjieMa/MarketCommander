@@ -1,19 +1,16 @@
 <template>
-  <div class="user-homepage">
-    <el-input placeholder="请输入内容" v-model="formData.searchText" class="input-with-select" style="width:100%">
-      <el-button slot="append" icon="el-icon-search" @click="onSubmit(formData.searchText, '')"></el-button>
+  <div class="goods-list">
+    <el-input placeholder="请输入内容" v-model="formData.name" class="input-with-select" style="width:100%">
+      <el-button slot="append" icon="el-icon-search" @click="onSubmit()"></el-button>
     </el-input>
-    <el-carousel :interval="4000" type="card" height="200px">
-      <el-carousel-item v-for="item in 6" :key="item">
-        <h3>{{ item }}</h3>
-      </el-carousel-item>
-    </el-carousel>
+    当前查询条件：名称：{{formData.name == ''?"全部":formData.name}},种类id:{{formData.typeid == 0?"全部":formData.typeid}}
+    <el-button size="mini" @click="onClear()">清空种类</el-button>
     <el-collapse v-model="formData.type" accordion>
       <template v-for="value in datas.columnData">
         <el-collapse-item :title="value.name" :name="value.id" :key="value.id">
           <template v-for="column in value.h2s">
             <el-col :span="6" :key="column.id">
-              <div @click="onSubmit('',column)">
+              <div @click="changeType(column)">
                 <el-card>{{column.text}}</el-card>
               </div>
             </el-col>
@@ -29,38 +26,49 @@
             <span>{{goods.name}}</span>
             <div class="bottom clearfix">
               <span>{{goods.price}}</span>
+              <el-button type="text" class="button">加入购物车</el-button>
             </div>
           </div>
         </el-card>
       </el-col>
     </el-row>
+    <div style="text-align:center">
+      <el-pagination  @size-change="changeSize" @current-change="changePage" :current-page="pageInfo.page" :page-sizes="[10, 20, 50]"
+        :page-size="pageInfo.size" layout="prev, pager, next" small :total="pageInfo.total">
+      </el-pagination>
+    </div>
   </div>
 </template>
 <script>
   import item from '@/services/system/item';
   import start from '@/services/system/main-page/start';
   export default {
-    name: 'user-homepage',
+    name: 'goods-list',
     data() {
       return {
         formData: {
-          searchText: '',
-          type: ''
+          name: '',
+          typeid: 0
+        },
+        pageInfo: {
+          page: 1,
+          pages: 1,
+          size: 10,
+          total: 1
         },
         datas: {
           columnData: []
-        },
-        goodsData: []
+        }
       }
     },
     methods: {
-      fetchData() {
-        const params = {
-          page: 1,
-          size: 999999999
-        }
-        item.findbyname(params).then(json => {
-          this.goodsData = json.data;
+      onClear() {
+        this.formData.typeid = 0;
+      },
+      fetchColumnData() {
+        start.findAllAbove().then(json => {
+          console.log(json);
+          this.datas.columnData = json.data;
         }).catch(err => {
           console.log(err);
           this.$message({
@@ -71,23 +79,23 @@
           this.$loading = false;
         })
       },
-      onSubmit(text, typeObj) {
+      changeType(column) {
+        this.formData.typeid = column.typeid;
+      },
+      fetchData() {
         const params = {
-          page: 1,
-          size: 10
-        }
-        if (text != null) {
-          params.name = text
-        }
-        if (typeObj != null) {
-          params.typeid = typeObj.typeid
+          page: this.pageInfo.page,
+          size: this.pageInfo.size,
+          name: this.formData.name || '',
+          typeid: this.formData.typeid || 0
         }
         item.findbyname(params).then(json => {
           console.log(json);
           this.$router.push({
             path: '/user/goods/list',
             query: {
-              goodsData: json.data
+              goodsData: json.data,
+              lastFormData: this.formData
             }
           });
         }).catch(err => {
@@ -100,35 +108,25 @@
           this.$loading = false;
         })
       },
-      handleSelect(key, keyPath) {
-        this.$store.state.activeIndex = key;
-        this.$router.push({
-          path: key
-        });
+      onSubmit() {
+        this.fetchData();
       },
-      fetchColumnData() {
-        start.findAllAbove().then(json => {
-          console.log('栏目数据' + JSON.stringify(json.data));
-          this.datas.columnData = json.data;
-        }).catch(err => {
-          console.log(err);
-          this.$message({
-            showClose: true,
-            message: '系统出错！',
-            type: 'error'
-          });
-          this.$loading = false;
-        })
-      }
-    },
-    computed: {
-      activeIndex() {
-        return this.$store.state.activeIndex;
+      changeSize(size) {
+        this.pageInfo.size = size;
+        this.fetchData();
+      },
+      changePage(page) {
+        this.pageInfo.page = page;
+        this.fetchData();
       }
     },
     created() {
       this.fetchColumnData();
-      this.fetchData();
+    },
+    computed: {
+      goodsData() {
+        return this.$route.query.goodsData || '';
+      }
     }
   }
 

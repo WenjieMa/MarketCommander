@@ -1,4 +1,4 @@
-import axios from '@/app-store/axios'
+import axios from '@/app/axios'
 
 export default {
   insert1(params) {
@@ -30,5 +30,8 @@ export default {
   },
   changeeff2(params) {
     return axios.post('/mainpage/start/2/changeeff', params);
+  },
+  findAllAbove() {
+    return axios.post('/mainpage/start/findallabove');
   }
 }

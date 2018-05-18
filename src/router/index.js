@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // import qs from 'qs';
-import store from '@/app-store/vuex';
+import store from '@/app/vuex';
 import systemBaseRoute from './system-base-route';
 import userBaseRoute from './user-base-route';
 
@@ -13,8 +13,12 @@ const router = new Router({
     systemBaseRoute,
     userBaseRoute,
     {
-      path: '/',
+      path: '/1',
       redirect: '/system/login'
+    },
+    {
+      path: '/2',
+      redirect: '/user/login'
     },
     {
       path: '*',

@@ -4,6 +4,11 @@
       <el-form-item label="二级栏目名称">
         <el-input v-model="formData.text" placeholder="二级栏目名称"></el-input>
       </el-form-item>
+      <el-form-item label="关联商品种类">
+        <el-select v-model="formData.typeid" placeholder="关联商品种类">
+          <el-option v-for="itemtype in datas.typeData" :label="itemtype.typename" :value="itemtype.id" :key="itemtype.id"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="insertData">添加</el-button>
       </el-form-item>
@@ -13,8 +18,11 @@
       </el-table-column>
       <el-table-column label="二级栏目名称" prop="text">
       </el-table-column>
+      <el-table-column label="关联商品种类id" prop="typeid">
+      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
+
           <el-button type="danger" @click="deleteData(scope.row.id)" size="mini">
             <i class="el-icon-delete"></i>删除</el-button>
         </template>
@@ -24,21 +32,24 @@
   </div>
 </template>
 <script>
-  import start from '@/services/system/main-page/start'
+  import start from '@/services/system/main-page/start';
+    import itemtype from '@/services/system/itemtype';
   export default {
     name: 'start-columns-detail',
     data() {
       return {
         formData: {
           text: '',
-          parentid: this.$route.query.columnId
+          parentid: this.$route.query.columnId,
+          typeid: ''
         },
         datas: {
           columnData: [{
             id: '3',
             name: '测试二级栏目',
             index: '3'
-          }]
+          }],
+          typeData: []
         },
         pageInfo: {
           page: 1,
@@ -68,6 +79,24 @@
             message: '系统出错！',
             type: 'error'
           });
+        })
+      },
+      fetchTypeData() {
+        const params = {
+          page: 1,
+          size: 999999
+        }
+        itemtype.findall(params).then(json => {
+          console.log(json);
+          this.datas.typeData = json.data;
+        }).catch(err => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message: '系统出错！',
+            type: 'error'
+          });
+          this.$loading = false;
         })
       },
       fetchData() {
@@ -123,6 +152,7 @@
     },
     created() {
       this.fetchData();
+      this.fetchTypeData();
     }
   }
 

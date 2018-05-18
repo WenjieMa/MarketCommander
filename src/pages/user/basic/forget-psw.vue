@@ -4,34 +4,34 @@
       <el-container>
         <el-header>找回密码</el-header>
         <el-main>
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="not-inline-form">
-            <div v-if="process==1">
+          <el-form :model="formData" status-icon :rules="rules" ref="formData" label-width="60px" class="not-inline-form">
+            <div v-show="process==1">
               <el-form-item label="账号:" prop="username">
-                <el-input type="text" v-model="ruleForm.username" placeholder="请输入账号" auto-complete="off"></el-input>
+                <el-input type="text" v-model="formData.username" placeholder="请输入账号" auto-complete="off"></el-input>
               </el-form-item>
               <el-form-item label="手机号" prop="phone">
-                <el-input v-model.number="ruleForm.phone" @blur="judgePhone()" placeholder="请输入手机号" auto-complete="off"></el-input>
+                <el-input v-model.number="formData.phone" @blur="judgePhone()" placeholder="请输入手机号" auto-complete="off"></el-input>
                 <el-button type="primary" :loading="true" round plain disabled v-if="sending&&!isSended">正在发送验证码</el-button>
                 <el-button type="primary" :loading="false" disabled round plain v-if="!isPhoneCorrect">发送验证码</el-button>
                 <el-button type="primary" @click="onSendMsg()" :loading="false" round plain v-if="!sending&&isPhoneCorrect&&!isSended">发送验证码</el-button>
                 <el-button type="primary" @click="onSendMsg()" :loading="false" round plain v-if="!sending&&isPhoneCorrect&&isSended">再次发送验证码</el-button>
               </el-form-item>
               <el-form-item label="验证码" prop="phoneCheckIputNum" v-if="isSended">
-                <el-input v-model.number="ruleForm.phoneCheckIputNum" placeholder="在此输入验证码" auto-complete="off"></el-input>
+                <el-input v-model.number="formData.phoneCheckIputNum" placeholder="在此输入验证码" auto-complete="off"></el-input>
               </el-form-item>
-              <el-form-item>
+              <el-form-item label-width="0px;">
                 <el-button type="primary" @click="onSureProcess1()">确认信息</el-button>
                 <router-link type="success" :to="{ name: 'user-login'}">
                   <el-button type="success">返回</el-button>
                 </router-link>
               </el-form-item>
             </div>
-            <div v-if="process==2">
+            <div v-show="process==2">
               <el-form-item label="新密码" prop="pass">
-                <el-input type="password" v-model="ruleForm.pass" placeholder="请输入密码" auto-complete="off"></el-input>
+                <el-input type="password" v-model="formData.pass" placeholder="请输入密码" auto-complete="off"></el-input>
               </el-form-item>
-              <el-form-item label="确认新密码" prop="checkPass">
-                <el-input type="password" v-model="ruleForm.checkPass" placeholder="请再次输入密码" auto-complete="off"></el-input>
+              <el-form-item label="" prop="checkPass">
+                <el-input type="password" v-model="formData.checkPass" placeholder="请再次输入密码" auto-complete="off"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="onForgetSubmit">确认修改</el-button>
@@ -42,16 +42,13 @@
         </el-main>
       </el-container>
     </el-container>
-    <alert v-if="isForgetUpdatePsw" :title="toTitle" :toRoute="toRoute"></alert>
   </div>
 </template>
 <script>
   import qcloudsms from '@/utils/qcloudsms.js';
+  import user from '@/services/user/user'
   export default {
     name: 'forget-psw',
-    components: {
-      alert
-    },
     data() {
       var validatePass = (rule, value, callback) => {
         if (value == '') {
@@ -59,8 +56,8 @@
         } else if (value.length > 25 || value.length < 6) {
           callback(new Error('请确保密码长度为6-25位!'));
         } else {
-          if (this.ruleForm.checkPass != '') {
-            this.$refs.ruleForm.validateField('checkPass');
+          if (this.formData.checkPass != '') {
+            this.$refs.formData.validateField('checkPass');
           }
           callback();
         }
@@ -68,7 +65,7 @@
       var validatePass2 = (rule, value, callback) => {
         if (value == '') {
           callback(new Error('请再次输入密码'));
-        } else if (value != this.ruleForm.pass) {
+        } else if (value != this.formData.pass) {
           callback(new Error('两次输入密码不一致!'));
         } else {
           callback();
@@ -114,7 +111,7 @@
         phoneCheckNum: '',
         toTitle: '',
         toRoute: '',
-        ruleForm: {
+        formData: {
           username: '',
           pass: '',
           checkPass: '',
@@ -150,23 +147,59 @@
     },
     methods: {
       onForgetSubmit() {
-        var isSuccess = false;
-        isSuccess = true;
-        if (isSuccess) {
-          this.toTitle = '修改成功！';
-          this.toRoute = '/login';
-          this.isForgetUpdatePsw = true;
-        } else {
-          this.toTitle = '修改发生错误，请重新尝试！';
-          this.toRoute = '';
-          this.isForgetUpdatePsw = true;
+        const params = {
+          username: this.formData.username,
+          password: this.formData.checkPass
         }
+        user.updateForget(params).then(json => {
+          this.$message({
+            showClose: true,
+            message: '找回成功！',
+            type: 'success'
+          });
+          this.$router.push({
+            name: 'user-login'
+          });
+        }).catch(err => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message: '用户名不存在或者密码错误！',
+            type: 'error'
+          });
+          this.$loading = false;
+        })
       },
       onSureProcess1() {
-        var sure = false;
-        sure = true;
-        if (sure) {
-          this.process = 2;
+        // if (this.phoneCheckNum != '' && this.phoneCheckNum == this.formData.phoneCheckIputNum) {
+        const a = true;
+        if (a) {
+          const params = {
+            username: this.formData.username,
+            phone: this.formData.phone
+          }
+          user.findbyusernameandphone(params).then(json => {
+            this.$message({
+              showClose: true,
+              message: '信息正确！',
+              type: 'success'
+            });
+            this.process = 2;
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              showClose: true,
+              message: '用户名和手机不匹配！',
+              type: 'error'
+            });
+            this.$loading = false;
+          })
+        } else {
+          this.$message({
+            showClose: true,
+            message: '验证码不正确！',
+            type: 'error'
+          });
         }
       },
       onThisPageBack() {
@@ -174,7 +207,7 @@
       },
       onSendMsg() {
         this.sending = true;
-        this.phoneCheckNum = qcloudsms.send(this.ruleForm.phone, this.callbackFunc);
+        this.phoneCheckNum = qcloudsms.send(this.formData.phone, this.callbackFunc);
         console.log(this.phoneCheckNum);
         if (this.phoneCheckNum != '') {
           this.isSended = true;
@@ -204,14 +237,11 @@
       },
       judgePhone() {
         const phoneRegex = /^1[0-9]{10}$/i;
-        if (!phoneRegex.test(this.ruleForm.phone || !this.judgeUserAndPhone())) {
+        if (!phoneRegex.test(this.formData.phone)) {
           this.isPhoneCorrect = false;
         } else {
           this.isPhoneCorrect = true;
         }
-      },
-      judgeUserAndPhone() {
-        return true;
       }
     }
   }

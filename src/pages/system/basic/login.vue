@@ -62,7 +62,7 @@
           this.$store.state.roletree = rolestr;
           console.log('当前role为' + this.$store.state.roletree);
           this.$router.push({
-            name: 'system-homepage'
+            path: '/system/homepage'
           });
         }).catch(err => {
           console.log(err);

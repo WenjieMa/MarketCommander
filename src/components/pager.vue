@@ -1,6 +1,6 @@
 <template>
   <div class="pager" style="text-align:center">
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50]"
+    <el-pagination :small="small" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50]"
       :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
     </el-pagination>
   </div>
@@ -20,6 +20,9 @@
       total: {
         type: Number,
         default: 10
+      },
+      small: {
+        default: false
       }
     },
     methods: {

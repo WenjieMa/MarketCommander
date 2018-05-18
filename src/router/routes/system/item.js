@@ -24,7 +24,7 @@ const itemRoute = {
     },
     {
       path: '/system/item/import/list',
-      name: 'item-import-list',
+      name: 'item-import',
       meta: {
         menu: 'item|item-import',
         name: '进货记录',
@@ -34,7 +34,7 @@ const itemRoute = {
     },
     {
       path: '/system/item/import',
-      name: 'item-import',
+      name: 'item-importing',
       meta: {
         menu: 'item|item-import',
         name: '进货',

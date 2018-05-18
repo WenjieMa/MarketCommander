@@ -1,4 +1,4 @@
-import axios from '@/app-store/axios'
+import axios from '@/app/axios'
 
 export default {
   login(params) {
@@ -6,5 +6,11 @@ export default {
   },
   regist(params) {
     return axios.post('/auth/operator/regist', params);
+  },
+  userlogin(params) {
+    return axios.post('/auth/user/login', params);
+  },
+  userRegist(params) {
+    return axios.post('/auth/user/regist', params);
   }
 }

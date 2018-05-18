@@ -5,16 +5,10 @@
         <el-input v-model="formData.id" placeholder="用户id"></el-input>
       </el-form-item>
       <el-form-item label="用户昵称">
-        <el-input v-model="formData.name" placeholder="用户昵称"></el-input>
+        <el-input v-model="formData.nickname" placeholder="用户昵称"></el-input>
       </el-form-item>
       <el-form-item label="用户手机号">
         <el-input v-model="formData.phone" placeholder="用户手机号"></el-input>
-      </el-form-item>
-      <el-form-item label="冻结状态">
-        <el-select v-model="formData.iseffective" placeholder="冻结状态">
-          <el-option label="已冻结" value="0"></el-option>
-          <el-option label="未冻结" value="1"></el-option>
-        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -23,7 +17,7 @@
     <el-table :data="datas.userData" style="width: 100%">
       <el-table-column label="用户 ID" prop="id">
       </el-table-column>
-      <el-table-column label="用户昵称" prop="name">
+      <el-table-column label="用户昵称" prop="nickname">
       </el-table-column>
       <el-table-column label="手机号" prop="phone">
       </el-table-column>
@@ -35,46 +29,97 @@
         </template>
       </el-table-column>
     </el-table>
+    <pager v-if="pageInfo" :currentPage="pageInfo.page" :total="pageInfo.total" :pagesize="pageInfo.size"></pager>
   </div>
 </template>
 <script>
+  import user from '@/services/user/user'
   export default {
     name: 'user-list',
     data() {
       return {
         formData: {
-          name: '',
+          nickname: '',
           id: '',
-          phone: '',
-          iseffective: ''
+          phone: ''
         },
         datas: {
-          userData: [{
-            id: '1',
-            name: '测试用户',
-            phone: '15273202288',
-            iseffective: '1'
-          }, {
-            id: '2',
-            name: '测试用户',
-            phone: '15273202288',
-            iseffective: '1'
-          }, {
-            id: '3',
-            name: '测试用户',
-            phone: '15273202288',
-            iseffective: '1'
-          }]
+          userData: []
+        },
+        pageInfo: {
+          page: 1,
+          pages: 1,
+          size: 10,
+          total: 1
         }
       }
     },
     methods: {
-      onSubmit() {
-
+      fetchData() {
+        this.$loading = true;
+        const params = {
+          page: this.pageInfo.page,
+          size: this.pageInfo.size
+        }
+        if (this.formData.nickname) {
+          params.nickname = this.formData.nickname;
+        }
+        if (this.formData.id) {
+          params.id = this.formData.id;
+        } else {
+          params.id = 0
+        }
+        if (this.formData.phone) {
+          params.phone = this.formData.phone;
+        }
+        if (params.nickname || params.id || params.phone) {
+          user.findbyname(params).then(json => {
+            console.log(json);
+            this.$loading = false;
+            this.datas.userData = json.data;
+            this.pageInfo.pages = json.pages;
+            this.pageInfo.total = json.total;
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              showClose: true,
+              message: '系统出错！',
+              type: 'error'
+            });
+            this.$loading = false;
+          })
+        } else {
+          user.findall(params).then(json => {
+            console.log(json);
+            this.$loading = false;
+            this.datas.userData = json.data;
+            this.pageInfo.pages = json.pages;
+            this.pageInfo.total = json.total;
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              showClose: true,
+              message: '系统出错！',
+              type: 'error'
+            });
+            this.$loading = false;
+          })
+        }
       },
-      changeEffective(ef) {
-
+      onSubmit() {
+        this.fetchData();
+      },
+      changeSize(size) {
+        this.pageInfo.size = size;
+        this.fetchData();
+      },
+      changePage(page) {
+        this.pageInfo.page = page;
+        this.fetchData();
       }
+    },
+    created() {
+      this.fetchData();
     }
   }
 

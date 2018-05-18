@@ -21,8 +21,8 @@ const systemRouter = {
       path: '/system/homepage',
       name: 'system-homepage',
       meta: {
-        menu: 'home|homepage',
-        name: '首页',
+        menu: 'home|system-homepage',
+        name: '总览',
         index: 1
       },
       component: resolve => require(['@/pages/system/home/homepage'], resolve)
