@@ -57,7 +57,7 @@
       fetchData() {
         const params = {
           page: 1,
-          size: 999999999
+          size: 30
         }
         item.findbyname(params).then(json => {
           this.goodsData = json.data;

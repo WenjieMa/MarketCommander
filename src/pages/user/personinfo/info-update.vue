@@ -2,7 +2,7 @@
   <div class="user-edit">
     <el-form label-position="right" label-width="60px" size="medium" >
         <el-form-item label="头像">
-          <el-upload class="userimage-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess"
+          <el-upload class="userimage-uploader" :action="'http://localhost:8080/file/headpic?userid='+$store.state.user.info.id" :show-file-list="false" :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
             <img v-if="userData.headpic" :src="userData.headpic" class="userimage">
             <i v-else class="el-icon-plus userimage-uploader-icon"></i>
@@ -61,7 +61,8 @@
         })
       },
       handleAvatarSuccess(res, file) {
-        this.userData.headpic = URL.createObjectURL(file.raw);
+        console.log('返回的res' + JSON.stringify(res));
+        this.userData.headpic = res.data.url;
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
