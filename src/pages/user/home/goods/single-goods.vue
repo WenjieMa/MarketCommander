@@ -13,19 +13,145 @@
           <el-tag type="success">{{goodsData.textsmall}}</el-tag>
         </div>
         <div>详细介绍:{{goodsData.textbig}}</div>
+        <el-button round :type="isCollected?'danger':'success'" @click="addCollection(isCollected)">{{isCollected==true?'已收藏':'未收藏'}}
+          <i class="el-icon-star-off"></i>
+        </el-button>
         <el-button type="primary" @click="addToCart(goodsData)">加入购物车</el-button>
+        <div>评价:</div>
+        <template v-for="comment in commentData.commentReplyVos">
+          <div :key="comment.recordComment.id">
+            <el-rate v-model="comment.orderSmall.itemstar" disabled show-score text-color="#ff9900" score-template="{value}"> </el-rate>
+            时间:{{comment.recordComment.createdate}}
+            <img :src="comment.infoUser.headpic" class="item-img-big-cart" />用户{{comment.infoUser.nickname}}说:
+            <div>{{comment.recordComment.comment}}</div>
+            <div v-show="comment.recordComment.replyid !== -1">
+              官方回复:{{comment.recordCommentReply.text}}
+            </div>
+          </div>
+        </template>
+        <div style="text-align:center">
+          <el-pagination @size-change="changeSize" @current-change="changePage" :current-page="pageInfo.page" :page-sizes="[10, 20, 50]"
+            :page-size="pageInfo.size" layout="prev, pager, next" small :total="pageInfo.total">
+          </el-pagination>
+        </div>
+
       </div>
     </div>
   </div>
 </template>
 <script>
-  // import goods from '@/services/system/item';
+  import collection from '@/services/user/collection';
+  import comment from '@/services/user/comment';
   export default {
     name: 'single-goods',
     data() {
-      return {}
+      return {
+        isCollected: false,
+        pageInfo: {
+          page: 1,
+          pages: 1,
+          size: 12,
+          total: 1
+        },
+        commentData: []
+      }
     },
     methods: {
+      addCollection(isCollected) {
+        const params = {
+          itemid: this.goodsData.id,
+          userid: this.$store.state.user.info.id
+        }
+        console.log(params);
+        console.log(isCollected);
+        if (isCollected) {
+          collection.deletefromitem(params).then(json => {
+            this.fetchData();
+            this.$message({
+              showClose: true,
+              message: '已删除收藏!',
+              type: 'success'
+            });
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              showClose: true,
+              message: '系统出错！',
+              type: 'error'
+            });
+            this.$loading = false;
+          })
+        } else {
+          collection.insert(params).then(json => {
+            this.$message({
+              showClose: true,
+              message: '已加入收藏！',
+              type: 'success'
+            });
+            this.fetchData();
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              showClose: true,
+              message: '系统出错！',
+              type: 'error'
+            });
+            this.$loading = false;
+          })
+        }
+      },
+      fetchData() {
+        const params = {
+          itemid: this.goodsData.id,
+          userid: this.$store.state.user.info.id
+        }
+        console.log(params)
+        collection.findbyuseridanditemid(params).then(json => {
+          if (json.data) {
+            this.isCollected = true;
+          } else {
+            this.isCollected = false;
+          }
+        }).catch(err => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message: '系统出错！',
+            type: 'error'
+          });
+          this.$loading = false;
+        })
+      },
+      fetchCommentData() {
+        const params = {
+          id: this.goodsData.id,
+          typeid: -1,
+          name: null,
+          page: this.pageInfo.page,
+          size: this.pageInfo.size
+        }
+        console.log(params)
+        comment.findcommentbyitemid(params).then(json => {
+          this.commentData = json.data
+          console.log(json);
+        }).catch(err => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message: '系统出错！',
+            type: 'error'
+          });
+          this.$loading = false;
+        })
+      },
+      changeSize(size) {
+        this.pageInfo.size = size;
+        this.fetchCommentData();
+      },
+      changePage(page) {
+        this.pageInfo.page = page;
+        this.fetchCommentData();
+      },
       addToCart(goods) {
         console.log(this.$store.state.user.shopcart.data);
         if (this.$store.state.user.shopcart.data[goods.id]) {
@@ -64,6 +190,10 @@
       goodsData() {
         return this.$route.query.goodsData;
       }
+    },
+    created() {
+      this.fetchData();
+      this.fetchCommentData();
     }
   }
 

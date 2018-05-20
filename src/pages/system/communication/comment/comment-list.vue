@@ -28,9 +28,7 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <router-link :to="{path:'/system/communication/comment-detail', query:{itemid:scope.row.itemid}}">
-            <el-button size="mini" type="primary">查看详情</el-button>
-          </router-link>
+          <el-button size="mini" type="primary" @click="clickDetail(scope.row.id)">查看详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -61,6 +59,35 @@
       }
     },
     methods: {
+      clickDetail(id) {
+        const params = {
+          id: id,
+          page: 1,
+          size: 10
+        }
+        comment.findcommentbyitemid(params).then(json => {
+          console.log(json.data);
+          this.$router.push({
+            path: '/system/communication/comment-detail',
+            query: {
+              itemid: json.data.infoItem.id,
+              commentData: json.data,
+              page: 1,
+              size: 10
+            }
+          });
+          this.pageInfo.pages = json.pages;
+          this.pageInfo.total = json.total;
+        }).catch(err => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message: '系统出错！',
+            type: 'error'
+          });
+          this.$loading = false;
+        })
+      },
       fetchData() {
         console.log('查询订单中');
         this.$loading = true;

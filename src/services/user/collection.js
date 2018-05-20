@@ -10,7 +10,13 @@ export default {
   delete(params) {
     return axios.post('/collection/delete', params);
   },
+  deletefromitem(params) {
+    return axios.post('/collection/deletefromitem', params);
+  },
   findall(params) {
     return axios.post('/collection/findall', params);
+  },
+  findbyuseridanditemid(params) {
+    return axios.post('/collection/findbyuseridanditemid', params);
   }
 }

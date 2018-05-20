@@ -6,9 +6,12 @@
           <div style="padding: 14px;">
             <span>{{goods.name}}</span>
             <div class="bottom clearfix">
-              <img :src="goods.itempic" class="item-img-big" />
+              <router-link :to="{path: '/user/goods/goods-single',query:{goodsData:goods}}">
+                <img :src="goods.itempic" class="item-img-big" />
+              </router-link>
               <span>{{goods.price}}</span>
             </div>
+
           </div>
           <el-button type="danger" round="" icon="el-icon-delete" circle size="mini" @click="deleteCollection($store.state.user.info.id,goods.id)"></el-button>
         </el-card>
@@ -76,12 +79,7 @@
           console.log(json);
           this.pageInfo.pages = json.pages;
           this.pageInfo.total = json.total;
-          this.$router.push({
-            path: '/user/personinfo/collection',
-            query: {
-              goodsData: json.data
-            }
-          });
+          this.goodsData = json.data;
         }).catch(err => {
           console.log(err);
           this.$message({

@@ -15,5 +15,11 @@ export default {
   },
   finditemcommentsum(params) {
     return axios.post('/comment/finditemcommentsum', params);
+  },
+  findcommentbyitemid(params) {
+    return axios.post('/comment/findcommentbyitemid', params);
+  },
+  reply(params) {
+    return axios.post('/comment/reply', params);
   }
 }
