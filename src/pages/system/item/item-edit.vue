@@ -5,13 +5,11 @@
         {{itemData.id}}
       </el-form-item>
       <el-form-item label="商品图片">
-        <img class="item-img-big" :src="itemData.picshow">
-      </el-form-item>
-      <el-form-item label="商品小图">
-        <img class="item-img-big" :src="itemData.picsmall">
-      </el-form-item>
-      <el-form-item label="商品介绍页面图片">
-        <img class="item-img-big" :src="itemData.picbig">
+        <el-upload class="userimage-uploader" :action="'http://localhost:8080/file/itempic?itemid='+itemData.id" :show-file-list="false"
+          :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+          <img v-if="itemData.itempic" :src="itemData.itempic" class="item-img-big">
+          <i v-else class="el-icon-plus userimage-uploader-icon"></i>
+        </el-upload>
       </el-form-item>
       <el-form-item label="商品名称">
         <el-input v-model="itemData.name" placeholder="商品名称"></el-input>
@@ -59,9 +57,7 @@
           typeid: '',
           price: '',
           description: '',
-          picshow: '',
-          picsmall: '',
-          picbig: '',
+          itempic: '',
           textsmall: '',
           textbig: '',
           discount: ''
@@ -109,6 +105,21 @@
             this.$loading = false;
           })
         }
+      },
+      handleAvatarSuccess(res, file) {
+        console.log(res);
+        this.itemData.itempic = res.data.url;
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
       }
     },
     created() {

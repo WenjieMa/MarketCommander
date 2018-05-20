@@ -2,26 +2,29 @@
   <div class="comment-list">
     <el-form :inline="true" :model="formData" class="demo-form-inline">
       <el-form-item label="商品id">
-        <el-input v-model="formData.itemid" placeholder="商品名称"></el-input>
+        <el-input v-model="formData.id" placeholder="商品id"></el-input>
+      </el-form-item>
+      <el-form-item label="商品名称">
+        <el-input v-model="formData.name" placeholder="商品名称"></el-input>
       </el-form-item>
       <el-form-item label="评论时间段">
-        {{formData.createdate}}
-        <el-date-picker v-model="formData.createdate" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期"
+        {{formData.imdate}}
+        <el-date-picker v-model="formData.imdate" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期"
           end-placeholder="结束日期" :picker-options="datePickParam">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="primary" @click="fetchData">查询</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="datas.chatData" style="width: 100%">
-      <el-table-column label="商品 ID" prop="itemid">
+      <el-table-column label="商品 ID" prop="id">
       </el-table-column>
-      <el-table-column label="商品名称" prop="itemname">
+      <el-table-column label="商品名称" prop="name">
       </el-table-column>
-      <el-table-column label="星级" prop="star">
+      <el-table-column label="平均" prop="avgstar">
       </el-table-column>
-      <el-table-column label="评论数" prop="commentcount">
+      <el-table-column label="评论数" prop="count">
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -31,9 +34,12 @@
         </template>
       </el-table-column>
     </el-table>
+    <pager v-if="pageInfo" :currentPage="pageInfo.page" :total="pageInfo.total" :pagesize="pageInfo.size"></pager>
+
   </div>
 </template>
 <script>
+  import comment from '@/services/user/comment';
   export default {
     name: 'comment-list',
     data() {
@@ -41,42 +47,49 @@
         formData: {
           name: '',
           id: '',
-          createdate: ''
+          imdate: ''
+        },
+        pageInfo: {
+          page: 1,
+          pages: 1,
+          size: 10,
+          total: 1
         },
         datas: {
-          chatData: [{
-            itemid: '1',
-            itemname: '测试商品',
-            star: '3.7',
-            commentcount: '150'
-          }, {
-            itemid: '1',
-            itemname: '测试商品',
-            star: '3.7',
-            commentcount: '150'
-          }, {
-            itemid: '1',
-            itemname: '测试商品',
-            star: '3.7',
-            commentcount: '150'
-          }, {
-            itemid: '1',
-            itemname: '测试商品',
-            star: '3.7',
-            commentcount: '150'
-          }, {
-            itemid: '1',
-            itemname: '测试商品',
-            star: '3.7',
-            commentcount: '150'
-          }]
+          chatData: []
         }
       }
     },
     methods: {
-      onSubmit() {
-
+      fetchData() {
+        console.log('查询订单中');
+        this.$loading = true;
+        const params = {
+          id: this.formData.id || 0,
+          name: this.formData.name || null,
+          start: this.formData.imdate[0] || null,
+          end: this.formData.imdate[1] || null,
+          page: this.pageInfo.page,
+          size: this.pageInfo.size
+        }
+        console.log(params);
+        comment.finditemcommentsum(params).then(json => {
+          console.log(json);
+          this.$loading = false;
+          this.datas.chatData = json.data;
+        }).catch(err => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message: '系统出错！',
+            type: 'error'
+          });
+          this.$loading = false;
+        })
       }
+    },
+    created() {
+      this.fetchData();
     }
   }
 

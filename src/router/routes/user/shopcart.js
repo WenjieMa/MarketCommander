@@ -7,38 +7,30 @@ const shopcartRoute = {
       name: 'shopcart-cart',
       meta: {
         menu: 'shopcart|shopcart',
-        name: '商品列表',
+        name: '购物车',
         index: 2
       },
       component: resolve => require(['@/pages/user/shopcart/cart'], resolve)
     },
     {
-      path: '/user/shopcart/order-pay-success',
-      name: 'shopcart-order-pay-success',
+      path: '/user/shopcart/order/list',
+      name: 'shopcart-order-list',
       meta: {
         menu: 'shopcart|shopcart',
         name: '商品详情',
         index: 2
       },
-      component: resolve => require(['@/pages/user/shopcart/order/order-pay-success'], resolve)
-    }, {
-      path: '/user/shopcart/order-pay',
-      name: 'shopcart-order-pay',
+      component: resolve => require(['@/pages/user/shopcart/order/order-list'], resolve)
+    },
+    {
+      path: '/user/goods/comment',
+      name: 'goods-comment',
       meta: {
         menu: 'shopcart|shopcart',
         name: '商品详情',
         index: 2
       },
-      component: resolve => require(['@/pages/user/shopcart/order/order-pay'], resolve)
-    }, {
-      path: '/user/shopcart/order-submit',
-      name: 'shopcart-order-submit',
-      meta: {
-        menu: 'shopcart|shopcart',
-        name: '商品详情',
-        index: 2
-      },
-      component: resolve => require(['@/pages/user/shopcart/order/order-submit'], resolve)
+      component: resolve => require(['@/pages/user/home/goods/comment'], resolve)
     }
   ]
 }

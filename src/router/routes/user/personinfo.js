@@ -23,16 +23,6 @@ const personinfoRoute = {
       component: resolve => require(['@/pages/user/personinfo/collection'], resolve)
     },
     {
-      path: '/user/personinfo/chat',
-      name: 'personinfo-chat',
-      meta: {
-        menu: 'personinfo|personinfo-info',
-        name: '商品详情',
-        index: 2
-      },
-      component: resolve => require(['@/pages/user/personinfo/chat'], resolve)
-    },
-    {
       path: '/user/personinfo/order-list',
       name: 'personinfo-order-list',
       meta: {

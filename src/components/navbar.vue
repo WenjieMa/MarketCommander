@@ -16,7 +16,7 @@
           订单中心
         </template>
       </el-menu-item>
-      <el-menu-item index="/system/communication/chat-list"  v-if="utils.roletree.indexOf('3')!=-1">
+      <el-menu-item index="/system/communication/comment-list"  v-if="utils.roletree.indexOf('3')!=-1">
         <template slot="title">
           <i class="el-icon-message"></i>沟通中心</template>
       </el-menu-item>

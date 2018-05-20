@@ -32,6 +32,7 @@ router.beforeEach((to, from, next) => {
   if (to.path !== '/system/login' && to.path !== '/system/regist' && to.path !== '/system/forget-psw' && to.path !== '/user/login' && to.path !== '/user/regist' && to.path !== '/user/forget-psw') {
     isBase = false;
   }
+
   if (!isBase) {
     if (to.meta.ischecked) {
       store.dispatch('selectMenu', from.meta.menu || 'null|null');

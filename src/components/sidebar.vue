@@ -11,9 +11,6 @@
         <el-menu-item index="item-itemtype">商品分类管理</el-menu-item>
       </span>
       <span v-show="this.$store.state.menu.nav == 'communication'">
-        <el-menu-item index="system-chat-list">
-          <el-badge :value="10" :max="99" class="item">客户留言</el-badge>
-        </el-menu-item>
         <el-menu-item index="system-comment-list">
           <el-badge :value="10" :max="99" class="item">评论管理</el-badge>
         </el-menu-item>
@@ -33,7 +30,6 @@
       </span>
       <span v-show="this.$store.state.menu.nav == 'order'">
         <el-menu-item index="order-list">订单列表</el-menu-item>
-        <el-menu-item index="order-refund">退换货订单</el-menu-item>
       </span>
       <span v-show="this.$store.state.menu.nav == 'systeminfo'">
         <el-menu-item index="district-list">省市信息</el-menu-item>

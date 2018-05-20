@@ -24,7 +24,10 @@ const store = new Vuex.Store({
         nickname: '测试用户'
       },
       shopcart: {
-
+        count: 0,
+        data: [],
+        sumprice: 0,
+        address: ''
       }
     },
     menu: {

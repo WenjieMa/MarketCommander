@@ -61,7 +61,7 @@
         })
       },
       handleAvatarSuccess(res, file) {
-        console.log('返回的res' + JSON.stringify(res));
+        console.log(res);
         this.userData.headpic = res.data.url;
       },
       beforeAvatarUpload(file) {

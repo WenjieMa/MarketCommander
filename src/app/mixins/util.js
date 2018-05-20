@@ -30,6 +30,29 @@ export default {
         return [];
       }
       return str.split('-');
+    },
+    cartItemSplice(array) {
+      console.log('进入数组清空系统');
+      var newArray = [];
+      for (var i = 0; i < array.length; i++) {
+        if (array[i] !== '' && typeof (array[i]) !== 'undefined') {
+          newArray.push(array[i]);
+        }
+      }
+      console.log('新数组' + JSON.stringify(newArray));
+      return newArray;
+    },
+    countPrice(array) {
+      console.log('进入统计价格系统');
+      var newArray = 0;
+      for (var i = 0; i < array.length; i++) {
+        if (array[i] !== '' && typeof (array[i]) !== 'undefined') {
+          newArray = newArray + array[i]['data']['price'] * array[i]['quantity'];
+          console.log('价格' + array[i]['data']['price'] + '/数量' + array[i]['quantity'] + '/结果' + array[i]['data']['price'] * array[i]['quantity']);
+        }
+      }
+      console.log('统计完的价格' + newArray);
+      return newArray;
     }
   },
   computed: {

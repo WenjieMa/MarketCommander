@@ -1,25 +1,20 @@
 <template>
   <div class="info">
-    欢迎您:{{$store.state.user.info.nickname}}
+    <img v-if="$store.state.user.info" :src="$store.state.user.info.headpic" class="userimage"> 欢迎您:{{$store.state.user.info.nickname}}
     <div>
-      <el-col :span="6">
-        <el-button type="warning" @click="collectionBtn()">收藏
+      <el-col :span="8">
+        <el-button type="warning" @click="collectionBtn()">收藏夹子
           <i class="el-icon-star-off"></i>
         </el-button>
       </el-col>
-      <el-col :span="6">
-        <el-button type="danger" @click="collectionBtn()">订单
+      <el-col :span="8">
+        <el-button type="danger" @click="orderBtn()">订单信息
           <i class="el-icon-tickets"></i>
         </el-button>
       </el-col>
-      <el-col :span="6">
-        <el-button type="primary" @click="infoBtn()">个人
+      <el-col :span="8">
+        <el-button type="primary" @click="infoBtn()">个人信息
           <i class="el-icon-setting"></i>
-        </el-button>
-      </el-col>
-      <el-col :span="6">
-        <el-button type="success" @click="collectionBtn()">消息
-          <i class="el-icon-message"></i>
         </el-button>
       </el-col>
     </div>
@@ -37,6 +32,11 @@
       }
     },
     methods: {
+      orderBtn() {
+        this.$router.push({
+          path: '/user/shopcart/order/list'
+        });
+      },
       infoBtn() {
         user.findbyname({
           id: this.$store.state.user.info.id,
@@ -62,7 +62,11 @@
       },
       collectionBtn() {
         const params = {
-          userid: this.$store.state.user.info.id
+          page: 1,
+          size: 12,
+          recordCollection: {
+            userid: this.$store.state.user.info.id
+          }
         }
         collection.findall(params).then(json => {
           console.log(json);

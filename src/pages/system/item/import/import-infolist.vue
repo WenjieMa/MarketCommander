@@ -77,12 +77,15 @@
         this.$loading = true;
         const params = {
           id: this.formData.id,
-          imdate: this.formData.imdate,
+          start: this.formData.imdate[0],
+          end: this.formData.imdate[1],
           page: this.pageInfo.page,
           size: this.pageInfo.size
         }
-        if (params.id && params.imdate) {
-          item.findimportyname(params).then(json => {
+        console.log(this.formData.imdate);
+        if (params.id || this.formData.imdate) {
+          console.log('输入了时间');
+          item.findimportbyname(params).then(json => {
             console.log(json);
             this.$loading = false;
             this.datas.importData = json.data;

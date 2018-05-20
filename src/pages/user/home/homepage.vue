@@ -1,8 +1,14 @@
 <template>
   <div class="user-homepage">
-    <el-input placeholder="请输入内容" v-model="formData.searchText" class="input-with-select" style="width:100%">
-      <el-button slot="append" icon="el-icon-search" @click="onSubmit(formData.searchText, '')"></el-button>
-    </el-input>
+    <div style="width:100%;height:60px;" class="searchDiv">
+      <el-select v-model="formData.searchText" filterable placeholder="请输入内容" style="width:85%;float:left">
+        <template v-for="hot in datas.hotData">
+          <el-option v-show="hot.iseffective" :label="hot.name" :value="hot.name" :key="hot.id">
+          </el-option>
+        </template>
+      </el-select>
+      <el-button slot="append" icon="el-icon-search" @click="onSubmit(formData.searchText, '')" style="width:15%;float:left"></el-button>
+    </div>
     <el-carousel :interval="4000" type="card" height="200px">
       <el-carousel-item v-for="item in 6" :key="item">
         <h3>{{ item }}</h3>
@@ -23,15 +29,18 @@
     </el-collapse>
     <el-row>
       <el-col :span="8" v-for="goods in goodsData" :key="goods.id">
-        <el-card :body-style="{ padding: '0px' }">
-          <img :src="goods.picshow" class="image">
-          <div style="padding: 14px;">
-            <span>{{goods.name}}</span>
-            <div class="bottom clearfix">
-              <span>{{goods.price}}</span>
+        <router-link :to="{path: '/user/goods/goods-single',query:{goodsData:goods}}">
+          <el-card :body-style="{ padding: '0px' }">
+            <img :src="goods.picshow" class="image">
+            <div style="padding: 14px;">
+              <span>{{goods.name}}</span>
+              <div class="ta-center bottom clearfix">
+                <img :src="goods.itempic" class="item-img-big" />
+                <span>{{goods.price}}</span>
+              </div>
             </div>
-          </div>
-        </el-card>
+          </el-card>
+        </router-link>
       </el-col>
     </el-row>
   </div>
@@ -39,6 +48,8 @@
 <script>
   import item from '@/services/system/item';
   import start from '@/services/system/main-page/start';
+  import hotsearch from '@/services/system/main-page/hotsearch';
+
   export default {
     name: 'user-homepage',
     data() {
@@ -48,7 +59,8 @@
           type: ''
         },
         datas: {
-          columnData: []
+          columnData: [],
+          hotData: []
         },
         goodsData: []
       }
@@ -118,6 +130,21 @@
             type: 'error'
           });
           this.$loading = false;
+        })
+
+        const params = {
+          page: 1,
+          size: 999
+        }
+        hotsearch.findall(params).then(json => {
+          this.datas.hotData = json.data;
+        }).catch(err => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message: '系统出错！',
+            type: 'error'
+          });
         })
       }
     },

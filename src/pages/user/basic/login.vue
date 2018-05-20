@@ -45,13 +45,8 @@
         }
         basic.userlogin(params).then(json => {
           this.$loading = false;
-          this.$store.state.user = {
-            correct: true,
-            info: json.data,
-            shopcart: {
-
-            }
-          }
+          this.$store.state.user.correct = true;
+          this.$store.state.user.info = json.data;
           this.$router.push({
             name: 'user-homepage'
           });

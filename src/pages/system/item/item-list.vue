@@ -31,6 +31,9 @@
             <el-form-item label="喜欢数">
               <span>{{ props.row.likes }}</span>
             </el-form-item>
+            <el-form-item label="图片">
+               <img v-if="props.row.itempic" :src="props.row.itempic" class="item-img-big">
+            </el-form-item>
             <el-form-item label="商品 ID">
               <span>{{ props.row.id }}</span>
             </el-form-item>
