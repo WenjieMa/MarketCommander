@@ -3,7 +3,6 @@
     <el-menu :default-active="activeSide" class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen" @close="handleClose">
       <span v-show="this.$store.state.menu.nav == 'home'">
         <el-menu-item index="system-homepage">总览</el-menu-item>
-        <el-menu-item index="el-template">模块</el-menu-item>
       </span>
        <span v-show="this.$store.state.menu.nav == 'item'">
         <el-menu-item index="item-list">商品信息管理</el-menu-item>

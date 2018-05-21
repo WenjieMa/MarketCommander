@@ -28,16 +28,6 @@ const systemRouter = {
       component: resolve => require(['@/pages/system/home/homepage'], resolve)
     },
     {
-      path: '/system/el-template',
-      name: 'el-template',
-      meta: {
-        menu: 'home|el-template',
-        name: '模块',
-        index: 2
-      },
-      component: resolve => require(['@/pages/system/home/el-template'], resolve)
-    },
-    {
       path: '/system/info-update',
       name: 'info-update',
       meta: {
