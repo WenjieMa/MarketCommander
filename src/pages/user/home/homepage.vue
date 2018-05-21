@@ -1,17 +1,25 @@
 <template>
   <div class="user-homepage">
-    <div style="width:100%;height:60px;" class="searchDiv">
-      <el-select v-model="formData.searchText" filterable placeholder="请输入内容" style="width:85%;float:left">
-        <template v-for="hot in datas.hotData">
-          <el-option v-show="hot.iseffective" :label="hot.name" :value="hot.name" :key="hot.id">
-          </el-option>
-        </template>
-      </el-select>
-      <el-button slot="append" icon="el-icon-search" @click="onSubmit(formData.searchText, '')" style="width:15%;float:left"></el-button>
+    <div style="width:100%;height:40px;text-align:left;" class="searchDiv">
+      <el-input v-model="formData.searchText" placeholder="请输入内容" style="width:85%;float:left">
+      </el-input>
+      <el-button slot="append" icon="el-icon-search" @click="onSubmit(formData.searchText, {typeid:0})" style="width:15%;float:left"></el-button>
     </div>
-    公告:
-    <div v-for="ann in datas.annData" :key="ann.id">{{ann.text}}</div>
-    <el-carousel :interval="4000" type="card" height="200px">
+    <div style="text-align:left">
+      <template v-for="hot in datas.hotData">
+        <div :key="hot.id" @click="changeText(hot.name)" style="top:40px;float:left">
+          <el-tag v-show="hot.iseffective">
+            {{hot.name}}
+          </el-tag>
+        </div>
+      </template>
+      公告:
+      <div v-for="ann in datas.annData" :key="ann.id">
+        <el-alert :title="ann.text" type="success" :closable="false">
+        </el-alert>
+      </div>
+    </div>
+    <el-carousel :interval="4000" type="card" height="200px" style="margin-top:25px;">
       <el-carousel-item v-for="image in datas.imageData" :key="image.id">
         <img :src="image.src" style="width:100%;height:100%" @click="pushRoute(image.link)" />
       </el-carousel-item>
@@ -70,6 +78,9 @@
       }
     },
     methods: {
+      changeText(text) {
+        this.formData.searchText = text;
+      },
       pushRoute(link) {
         this.$router.push({
           path: '/user/goods/goods-single',
@@ -85,7 +96,7 @@
           page: 1,
           size: 30
         }
-        item.findbyname(params).then(json => {
+        item.findall(params).then(json => {
           this.goodsData = json.data;
         }).catch(err => {
           console.log(err);
@@ -100,14 +111,21 @@
       onSubmit(text, typeObj) {
         const params = {
           page: 1,
-          size: 10
+          size: 10,
+          id: 0
         }
         if (text != null) {
           params.name = text
+        } else {
+          params.name = ''
         }
         if (typeObj != null) {
           params.typeid = typeObj.typeid
+        } else {
+          params.typeid = 0
         }
+        console.log(params);
+        console.log('主页搜索商品');
         item.findbyname(params).then(json => {
           console.log(json);
           this.$router.push({

@@ -63,6 +63,8 @@
         }
         if (this.formData.nickname) {
           params.nickname = this.formData.nickname;
+        } else {
+          params.nickname = '';
         }
         if (this.formData.id) {
           params.id = this.formData.id;
@@ -71,6 +73,8 @@
         }
         if (this.formData.phone) {
           params.phone = this.formData.phone;
+        } else {
+          params.phone = '';
         }
         if (params.nickname || params.id || params.phone) {
           user.findbyname(params).then(json => {

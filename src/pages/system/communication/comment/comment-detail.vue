@@ -25,7 +25,7 @@
       </el-table-column>
       <el-table-column label="发送方">
         <template slot-scope="scope">
-          <router-link :to="{path:'/system/assistant/user-detail', query:{data: scope.row.infoUser}}">
+          <router-link :to="{path:'/system/assistant/user-detail', query:{userData: scope.row.infoUser}}">
             <img :src="scope.row.infoUser.headpic" class="item-img-big-cart" />用户：{{scope.row.infoUser.nickname}}
           </router-link>
         </template>

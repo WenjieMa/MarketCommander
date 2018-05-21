@@ -59,15 +59,18 @@
         this.$loading = true;
         const params = {
           page: this.pageInfo.page,
-          size: this.pageInfo.size
+          size: this.pageInfo.size,
+          name: this.formData.name,
+          id: this.formData.id,
+          phone: this.formData.phone
         }
-        if (this.formData.name) {
+        if (this.formData.name !== '') {
           params.name = this.formData.name;
         }
-        if (this.formData.id) {
+        if (this.formData.id !== '') {
           params.id = this.formData.id;
         }
-        if (this.formData.phone) {
+        if (this.formData.phone !== '') {
           params.phone = this.formData.phone;
         }
         if (params.name || params.id || params.phone) {

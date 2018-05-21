@@ -40,8 +40,10 @@
           params.id = this.formData.id;
         }
         params.src = this.formData.src;
+        console.log('图片src' + this.formData.src);
         params.link = this.formData.link;
         image.insert(params).then(json => {
+          this.formData.src = json.data.src;
           console.log(json);
           this.$message({
             showClose: true,
@@ -60,7 +62,7 @@
         })
       },
       handleAvatarSuccess(res, file) {
-        this.formData.src = URL.createObjectURL(file.raw);
+        this.formData.src = res.data.url;
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';

@@ -40,6 +40,8 @@
       infoBtn() {
         user.findbyname({
           id: this.$store.state.user.info.id,
+          nickname: '',
+          phone: '',
           page: 1,
           size: 1
         }).then(json => {
@@ -64,9 +66,7 @@
         const params = {
           page: 1,
           size: 12,
-          recordCollection: {
-            userid: this.$store.state.user.info.id
-          }
+          userid: this.$store.state.user.info.id
         }
         collection.findall(params).then(json => {
           console.log(json);

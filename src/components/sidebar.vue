@@ -12,7 +12,7 @@
       </span>
       <span v-show="this.$store.state.menu.nav == 'communication'">
         <el-menu-item index="system-comment-list">
-          <el-badge :value="10" :max="99" class="item">评论管理</el-badge>
+          评论管理
         </el-menu-item>
       </span>
       <span v-show="this.$store.state.menu.nav == 'assistant'">

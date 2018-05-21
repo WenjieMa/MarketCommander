@@ -31,7 +31,7 @@ export default {
       }
       return str.split('-');
     },
-    cartItemSplice(array) {
+    cartItemSplice(array, nullobj) {
       console.log('进入数组清空系统');
       var newArray = [];
       for (var i = 0; i < array.length; i++) {

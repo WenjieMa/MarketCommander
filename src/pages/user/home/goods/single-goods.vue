@@ -55,7 +55,9 @@
           size: 12,
           total: 1
         },
-        goodsData: [],
+        goodsData: {
+          name: ''
+        },
         commentData: []
       }
     },
@@ -66,7 +68,7 @@
           userid: this.$store.state.user.info.id
         }
         console.log(params);
-        console.log(isCollected);
+        console.log('正在删除');
         if (isCollected) {
           collection.deletefromitem(params).then(json => {
             this.fetchData();
@@ -130,8 +132,6 @@
             }
             const params = {
               id: this.goodsData.id,
-              typeid: -1,
-              name: null,
               page: this.pageInfo.page,
               size: this.pageInfo.size
             }

@@ -110,6 +110,7 @@
       },
       fetchData() {
         const params = {
+          id: 0,
           page: this.pageInfo.page,
           size: this.pageInfo.size,
           name: this.formData.name || '',

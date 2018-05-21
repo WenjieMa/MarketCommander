@@ -80,31 +80,6 @@
           });
           this.$loading = false;
         })
-      },
-      sendOrder() {
-        const params = {
-          id: this.orderData.id,
-          deliveryid: this.deliveryid
-        }
-        if (confirm('确认发货?')) {
-          order.senddelivery(params).then(json => {
-            console.log(json);
-            this.$message({
-              showClose: true,
-              message: '发货成功！',
-              type: 'success'
-            });
-            this.fetchData();
-          }).catch(err => {
-            console.log(err);
-            this.$message({
-              showClose: true,
-              message: '系统出错！',
-              type: 'error'
-            });
-            this.$loading = false;
-          })
-        }
       }
     },
     created() {

@@ -1,5 +1,5 @@
-import qs from 'qs';
 import axios from 'axios';
+import qs from 'qs';
 import config from './configs/system-config';
 
 const instance = axios.create();
@@ -13,13 +13,25 @@ instance.defaults.baseURL = config.service.host; // 配置接口地址 具体地
  * 过滤空参数
  */
 instance.interceptors.request.use(function (request) {
-  console.log(request);
+  if (request.data == undefined) {
+    request.data = '{}';
+  }
   if (request.method == 'get') {
-    console.log(request.data);
-    request.data = qs.stringify(request.data, {
-      arrayFormat: 'repeat'
-    });
-    console.log(request.data);
+    console.log('我的url是' + request.url);
+    if (request.url !== undefined) {
+      request.url = request.url + '?' + qs.stringify(request.data);
+    } else {
+      request.url = '';
+    }
+
+    console.log(request);
+  } else if (request.method == 'post') {
+    console.log(request);
+  } else if (request.method == 'put') {
+    console.log(request);
+  } else if (request.method == 'delete') {
+    request.url = request.url + '?' + qs.stringify(request.data);
+    console.log(request);
   }
   return request
 })

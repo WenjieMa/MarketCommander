@@ -76,9 +76,7 @@
         const params = {
           page: this.pageInfo.page,
           size: this.pageInfo.size,
-          recordCollection: {
-            userid: this.$store.state.user.info.id
-          }
+          userid: this.$store.state.user.info.id
         }
         collection.findall(params).then(json => {
           console.log(json);

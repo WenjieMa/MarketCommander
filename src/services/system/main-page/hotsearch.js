@@ -2,18 +2,22 @@ import axios from '@/app/axios'
 
 export default {
   insert(params) {
-    return axios.post('/mainpage/hotsearch/insert', params);
+    return axios.post('/mainpage/hotsearch', params);
   },
   update(params) {
-    return axios.post('/mainpage/hotsearch/update', params);
-  },
-  delete(params) {
-    return axios.post('/mainpage/hotsearch/delete', params);
-  },
-  findall(params) {
-    return axios.post('/mainpage/hotsearch/findall', params);
+    return axios.put('/mainpage/hotsearch', params);
   },
   changeeff(params) {
-    return axios.post('/mainpage/hotsearch/changeeff', params);
+    return axios.put('/mainpage/hotsearch/eff', params);
+  },
+  delete(params) {
+    return axios.delete('/mainpage/hotsearch', {
+      data: params
+    });
+  },
+  findall(params) {
+    return axios.get('/mainpage/hotsearch', {
+      data: params
+    });
   }
 }

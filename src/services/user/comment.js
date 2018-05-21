@@ -2,24 +2,30 @@ import axios from '@/app/axios'
 
 export default {
   insert(params) {
-    return axios.post('/comment/insert', params);
+    return axios.post('/comment/obj', params);
   },
   update(params) {
-    return axios.post('/comment/update', params);
+    return axios.put('/comment/obj', params);
   },
   delete(params) {
-    return axios.post('/comment/delete', params);
+    return axios.delete('/comment/obj', {
+      data: params
+    });
   },
   findall(params) {
-    return axios.post('/comment/findall', params);
+    return axios.get('/comment/findall', {
+      data: params
+    });
   },
   finditemcommentsum(params) {
-    return axios.post('/comment/finditemcommentsum', params);
+    return axios.post('/comment/obj/finditemcommentsum', params);
   },
   findcommentbyitemid(params) {
-    return axios.post('/comment/findcommentbyitemid', params);
+    return axios.get('/comment/obj/findcommentbyitemid', {
+      data: params
+    });
   },
   reply(params) {
-    return axios.post('/comment/reply', params);
+    return axios.post('/comment/obj/reply', params);
   }
 }
