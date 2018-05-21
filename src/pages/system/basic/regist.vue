@@ -48,7 +48,7 @@
   </div>
 </template>
 <script>
-  // import qcloudsms from '@/utils/qcloudsms.js';
+  import qcloudsms from '@/utils/qcloudsms.js';
   import basic from '../../../services/basic'
   export default {
     name: 'regist',
@@ -150,13 +150,13 @@
       },
       onSendMsg() {
         this.sending = true;
-        // this.phoneCheckNum = qcloudsms.send(this.ruleForm.phone, this.callbackFunc);
-        // console.log(this.phoneCheckNum);
-        // if (this.phoneCheckNum != '') {
-        //   this.isSended = true;
-        // } else {
-        //   this.isSended = false;
-        // }
+        this.phoneCheckNum = qcloudsms.send(this.ruleForm.phone, this.callbackFunc);
+        console.log(this.phoneCheckNum);
+        if (this.phoneCheckNum != '') {
+          this.isSended = true;
+        } else {
+          this.isSended = false;
+        }
         this.isSended = true;
       },
       callbackFunc(err, res, resData) {
@@ -188,34 +188,43 @@
         }
       },
       judgePhoneCheck() {
-        if (this.phoneCheckNum != this.ruleForm.phoneCheckIputNum) {
-
+        if (this.phoneCheckNum !== '' && this.phoneCheckNum == this.ruleForm.phoneCheckIputNum) {
+          return true;
         }
+        return false;
       },
       onRegistSubmit() {
-        this.$loading = true;
-        const params = {
-          id: '',
-          username: this.ruleForm.username,
-          password: this.ruleForm.password,
-          gender: this.ruleForm.gender,
-          phone: this.ruleForm.phone,
-          name: this.ruleForm.name
-        }
-        basic.regist(params).then(json => {
-          this.$loading = false;
-          this.$router.push({
-            path: '/system/login'
-          });
-        }).catch(err => {
-          console.log(err);
+        if (this.judgePhoneCheck()) {
+          this.$loading = true;
+          const params = {
+            id: '',
+            username: this.ruleForm.username,
+            password: this.ruleForm.password,
+            gender: this.ruleForm.gender,
+            phone: this.ruleForm.phone,
+            name: this.ruleForm.name
+          }
+          basic.regist(params).then(json => {
+            this.$loading = false;
+            this.$router.push({
+              path: '/system/login'
+            });
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              showClose: true,
+              message: '信息填写错误',
+              type: 'error'
+            });
+            this.$loading = false;
+          })
+        } else {
           this.$message({
             showClose: true,
-            message: '信息填写错误',
+            message: '验证码错误',
             type: 'error'
           });
-          this.$loading = false;
-        })
+        }
       }
     }
   }

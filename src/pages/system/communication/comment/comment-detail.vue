@@ -106,7 +106,7 @@
       },
       onReply(obj) {
         console.log(obj);
-        obj.recordCommentReply.assistantid = this.$store.state.operator.info.operid;
+        obj.recordCommentReply.assistantid = this.$store.state.operator.info.id;
         const params = {
           recordComment: obj.recordComment,
           recordCommentReply: obj.recordCommentReply

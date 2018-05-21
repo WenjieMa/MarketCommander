@@ -58,7 +58,7 @@
         const logoutinfo = {
           correct: false,
           info: {
-            operid: '',
+            id: '',
             name: ''
           },
           roleTree: {

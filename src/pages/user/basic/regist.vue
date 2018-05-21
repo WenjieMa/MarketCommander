@@ -163,32 +163,40 @@
     },
     methods: {
       onRegistSubmit() {
-        this.$loading = true;
-        const params = {
-          username: this.formData.username,
-          password: this.formData.pass,
-          phone: this.formData.phone,
-          nickname: this.formData.nickname
-        }
-        basic.userRegist(params).then(json => {
-          this.$loading = false;
-           this.$message({
-            showClose: true,
-            message: '注册成功！',
-            type: 'success'
-          });
-          this.$router.push({
-            name: 'user-login'
-          });
-        }).catch(err => {
-          console.log(err);
+        if (this.judgePhoneCheck()) {
+          this.$loading = true;
+          const params = {
+            username: this.formData.username,
+            password: this.formData.pass,
+            phone: this.formData.phone,
+            nickname: this.formData.nickname
+          }
+          basic.userRegist(params).then(json => {
+            this.$loading = false;
+            this.$message({
+              showClose: true,
+              message: '注册成功！',
+              type: 'success'
+            });
+            this.$router.push({
+              name: 'user-login'
+            });
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              showClose: true,
+              message: '注册信息错误！',
+              type: 'error'
+            });
+            this.$loading = false;
+          })
+        } else {
           this.$message({
             showClose: true,
-            message: '注册信息错误！',
+            message: '验证码错误',
             type: 'error'
           });
-          this.$loading = false;
-        })
+        }
       },
       onBack() {
         this.$router.go(-1);
@@ -232,9 +240,10 @@
         }
       },
       judgePhoneCheck() {
-        if (this.phoneCheckNum != this.formData.phoneCheckIputNum) {
-
+        if (this.phoneCheckNum != '' && this.phoneCheckNum != this.formData.phoneCheckIputNum) {
+          return false;
         }
+        return true;
       }
     }
   }

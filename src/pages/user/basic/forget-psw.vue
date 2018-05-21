@@ -171,8 +171,10 @@
         })
       },
       onSureProcess1() {
-        // if (this.phoneCheckNum != '' && this.phoneCheckNum == this.formData.phoneCheckIputNum) {
-        const a = true;
+        var a = false;
+        if (this.phoneCheckNum != '' && this.phoneCheckNum == this.formData.phoneCheckIputNum) {
+          a = true;
+        }
         if (a) {
           const params = {
             username: this.formData.username,

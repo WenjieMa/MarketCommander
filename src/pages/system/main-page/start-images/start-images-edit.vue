@@ -1,15 +1,15 @@
 <template>
   <div class="start-images-edit">
     <el-form :model="formData" label-position="right" label-width="150px">
-      <el-form-item label="商品图片">
-        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
+      <el-form-item label="轮播展示图片">
+        <el-upload class="avatar-uploader" :action="'http://localhost:8080/file/homepic?picid='+formData.id" :show-file-list="false"
+          :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
           <img v-if="formData.src" :src="formData.src" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="图片链接">
-        <el-input class="el-textarea" type="textarea" :autosize="{ minRows: 1, maxRows: 2}" v-model="formData.link" placeholder="图片链接"></el-input>
+      <el-form-item label="对应商品Id">
+        <el-input v-model="formData.link" placeholder="对应商品Id"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="insertData">确认</el-button>
@@ -27,6 +27,7 @@
     data() {
       return {
         formData: {
+          id: this.$route.query.imageData.id || -1,
           src: this.$route.query.imageData.src || '',
           link: this.$route.query.imageData.link || ''
         }
@@ -34,7 +35,12 @@
     },
     methods: {
       insertData() {
-        const params = this.formData
+        const params = {};
+        if (this.formData.id > 0) {
+          params.id = this.formData.id;
+        }
+        params.src = this.formData.src;
+        params.link = this.formData.link;
         image.insert(params).then(json => {
           console.log(json);
           this.$message({

@@ -9,9 +9,11 @@
       </el-select>
       <el-button slot="append" icon="el-icon-search" @click="onSubmit(formData.searchText, '')" style="width:15%;float:left"></el-button>
     </div>
+    公告:
+    <div v-for="ann in datas.annData" :key="ann.id">{{ann.text}}</div>
     <el-carousel :interval="4000" type="card" height="200px">
-      <el-carousel-item v-for="item in 6" :key="item">
-        <h3>{{ item }}</h3>
+      <el-carousel-item v-for="image in datas.imageData" :key="image.id">
+        <img :src="image.src" style="width:100%;height:100%" @click="pushRoute(image.link)" />
       </el-carousel-item>
     </el-carousel>
     <el-collapse v-model="formData.type" accordion>
@@ -46,10 +48,11 @@
   </div>
 </template>
 <script>
+  import image from '@/services/system/main-page/image'
   import item from '@/services/system/item';
   import start from '@/services/system/main-page/start';
   import hotsearch from '@/services/system/main-page/hotsearch';
-
+  import ann from '@/services/system/main-page/anounce';
   export default {
     name: 'user-homepage',
     data() {
@@ -60,12 +63,23 @@
         },
         datas: {
           columnData: [],
-          hotData: []
+          hotData: [],
+          annData: []
         },
         goodsData: []
       }
     },
     methods: {
+      pushRoute(link) {
+        this.$router.push({
+          path: '/user/goods/goods-single',
+          query: {
+            goodsData: {
+              id: link
+            }
+          }
+        });
+      },
       fetchData() {
         const params = {
           page: 1,
@@ -119,6 +133,34 @@
         });
       },
       fetchColumnData() {
+        const annParams = {
+          page: 1,
+          size: 999
+        }
+        image.findall(annParams).then(json => {
+          console.log('公告' + JSON.stringify(json.data));
+          this.datas.imageData = json.data;
+        }).catch(err => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message: '系统出错！',
+            type: 'error'
+          });
+          this.$loading = false;
+        })
+        ann.findall(annParams).then(json => {
+          console.log('公告' + JSON.stringify(json.data));
+          this.datas.annData = json.data;
+        }).catch(err => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message: '系统出错！',
+            type: 'error'
+          });
+          this.$loading = false;
+        })
         start.findAllAbove().then(json => {
           console.log('栏目数据' + JSON.stringify(json.data));
           this.datas.columnData = json.data;
@@ -131,7 +173,6 @@
           });
           this.$loading = false;
         })
-
         const params = {
           page: 1,
           size: 999

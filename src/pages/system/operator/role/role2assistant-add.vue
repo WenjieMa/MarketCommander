@@ -1,6 +1,6 @@
 <template>
   <div class="assistant-list">
-    <el-table :data="datas.userData" style="width: 100%">
+    <el-table :data="datas.operData" style="width: 100%">
       <el-table-column label="管理员 ID" prop="id">
       </el-table-column>
       <el-table-column label="管理员昵称" prop="name">
@@ -13,6 +13,9 @@
         </template>
       </el-table-column>
     </el-table>
+    <router-link :to="{ path: '/system/operator/role/role2assistant', query:{roleData:this.roleData}}">
+      <el-button type="primary">返回</el-button>
+    </router-link>
     <pager v-if="pageInfo" :currentPage="pageInfo.page" :total="pageInfo.total" :pagesize="pageInfo.size"></pager>
   </div>
 </template>
@@ -33,7 +36,7 @@
           total: 1
         },
         datas: {
-          userData: [{
+          operData: [{
             id: '1',
             name: '测试管理员',
             phone: '15273202288',
@@ -58,6 +61,7 @@
           assistantid: oper.id,
           roleid: this.roleData.id
         }
+        console.log('管理员id是' + oper.id);
         role.insertRole2Assistant(params).then(json => {
           console.log(json);
           this.fetchData();
@@ -87,7 +91,7 @@
         role.findallRole2AssistantNone(params).then(json => {
           console.log(json);
           this.$loading = false;
-          this.datas.userData = json.data;
+          this.datas.operData = json.data;
           this.pageInfo.pages = json.pages;
           this.pageInfo.total = json.total;
         }).catch(err => {

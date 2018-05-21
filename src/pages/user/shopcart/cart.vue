@@ -23,7 +23,8 @@
         </template>
       </el-table-column>
     </el-table>
-    收货地址:<el-input size="mini" v-model="$store.state.user.shopcart.address" placeholder="收货地址"></el-input>
+    收货地址:
+    <el-input size="mini" v-model="$store.state.user.shopcart.address" placeholder="收货地址"></el-input>
     <div>
       <el-button type="success" @click="submitOrder">提交订单</el-button>
     </div>
@@ -54,13 +55,13 @@
             phone: this.$store.state.user.info.phone,
             count: this.$store.state.user.shopcart.count
           }
-          this.$store.state.user.shopcart = {
-            count: 0,
-            data: [],
-            sumprice: 0,
-            address: ''
-          }
           order.insert(params).then(json => {
+            this.$store.state.user.shopcart = {
+              count: 0,
+              data: [],
+              sumprice: 0,
+              address: ''
+            }
             this.$message({
               showClose: true,
               message: '创建订单成功！',
@@ -73,7 +74,7 @@
             console.log(err);
             this.$message({
               showClose: true,
-              message: '系统出错！',
+              message: '库存不够!',
               type: 'error'
             });
             this.$loading = false;

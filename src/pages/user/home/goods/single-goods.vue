@@ -8,6 +8,7 @@
         <div>是否打折:{{goodsData.isoff == true?'是':'否'}}</div>
         <div v-show="goodsData.isoff">打折系数:{{goodsData.discount}}</div>
         <div>库存:{{goodsData.store}}</div>
+        <div>喜欢数:{{goodsData.likes}}</div>
         <div>介绍:{{goodsData.description}}</div>
         <div>标签:
           <el-tag type="success">{{goodsData.textsmall}}</el-tag>
@@ -42,6 +43,7 @@
 <script>
   import collection from '@/services/user/collection';
   import comment from '@/services/user/comment';
+  import item from '@/services/system/item';
   export default {
     name: 'single-goods',
     data() {
@@ -53,6 +55,7 @@
           size: 12,
           total: 1
         },
+        goodsData: [],
         commentData: []
       }
     },
@@ -99,41 +102,61 @@
             this.$loading = false;
           })
         }
+        this.fetchData();
       },
       fetchData() {
         const params = {
-          itemid: this.goodsData.id,
-          userid: this.$store.state.user.info.id
+          page: 1,
+          size: 1,
+          id: this.getGoodsData.id || this.$route.query.goodsData.id,
+          name: '',
+          typeid: 0
         }
-        console.log(params)
-        collection.findbyuseridanditemid(params).then(json => {
-          if (json.data) {
-            this.isCollected = true;
-          } else {
-            this.isCollected = false;
-          }
-        }).catch(err => {
-          console.log(err);
-          this.$message({
-            showClose: true,
-            message: '系统出错！',
-            type: 'error'
-          });
-          this.$loading = false;
-        })
-      },
-      fetchCommentData() {
-        const params = {
-          id: this.goodsData.id,
-          typeid: -1,
-          name: null,
-          page: this.pageInfo.page,
-          size: this.pageInfo.size
-        }
-        console.log(params)
-        comment.findcommentbyitemid(params).then(json => {
-          this.commentData = json.data
+        item.findbyname(params).then(json => {
           console.log(json);
+          console.log('加载商品数据');
+          this.goodsData = json.data[0];
+
+          const params = {
+            itemid: this.goodsData.id,
+            userid: this.$store.state.user.info.id
+          }
+          console.log(params)
+          collection.findbyuseridanditemid(params).then(json => {
+            if (json.data) {
+              this.isCollected = true;
+            } else {
+              this.isCollected = false;
+            }
+            const params = {
+              id: this.goodsData.id,
+              typeid: -1,
+              name: null,
+              page: this.pageInfo.page,
+              size: this.pageInfo.size
+            }
+            console.log(params)
+            comment.findcommentbyitemid(params).then(json => {
+              this.commentData = json.data
+              console.log(json);
+            }).catch(err => {
+              console.log(err);
+              this.$message({
+                showClose: true,
+                message: '系统出错！',
+                type: 'error'
+              });
+              this.$loading = false;
+            })
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              showClose: true,
+              message: '系统出错！',
+              type: 'error'
+            });
+            this.$loading = false;
+          })
         }).catch(err => {
           console.log(err);
           this.$message({
@@ -146,11 +169,11 @@
       },
       changeSize(size) {
         this.pageInfo.size = size;
-        this.fetchCommentData();
+        this.fetchData();
       },
       changePage(page) {
         this.pageInfo.page = page;
-        this.fetchCommentData();
+        this.fetchData();
       },
       addToCart(goods) {
         console.log(this.$store.state.user.shopcart.data);
@@ -187,13 +210,12 @@
       }
     },
     computed: {
-      goodsData() {
+      getGoodsData() {
         return this.$route.query.goodsData;
       }
     },
     created() {
       this.fetchData();
-      this.fetchCommentData();
     }
   }
 

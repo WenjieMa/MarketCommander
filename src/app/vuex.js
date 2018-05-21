@@ -12,7 +12,7 @@ const store = new Vuex.Store({
     operator: {
       correct: false,
       info: {
-        operid: '1',
+        id: '1',
         name: '测试管理员'
       },
       roleTree: []

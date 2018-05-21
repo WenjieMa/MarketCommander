@@ -51,6 +51,11 @@
         console.log('删除的商品Id' + itemid);
         collection.delete(params).then(json => {
           console.log(json);
+          this.$message({
+            showClose: true,
+            message: '删除成功!',
+            type: 'success'
+          });
           this.$router.push({
             path: '/user/personinfo/collection',
             query: {

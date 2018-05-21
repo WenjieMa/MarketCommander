@@ -15,12 +15,12 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <template v-if="scope.row.iseffective == true">
+          <template v-if="scope.row.iseffective == false">
             <el-button type="primary" @click="changeEffective(scope.row)">
               设为热词
             </el-button>
           </template>
-          <template v-if="scope.row.iseffective == false">
+          <template v-if="scope.row.iseffective == true">
             <el-button type="warning" @click="changeEffective(scope.row)">
               取消热词
             </el-button>

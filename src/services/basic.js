@@ -7,6 +7,9 @@ export default {
   regist(params) {
     return axios.post('/auth/operator/regist', params);
   },
+  updateoper(params) {
+    return axios.post('/auth/operator/updateoper', params);
+  },
   userlogin(params) {
     return axios.post('/auth/user/login', params);
   },

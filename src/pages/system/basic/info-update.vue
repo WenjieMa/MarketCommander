@@ -1,46 +1,26 @@
 <template>
   <div class="assistant-edit">
     <el-form :model="assistantData" label-position="right" label-suffix="" label-width="150px">
-      <el-col span="12">
-        <el-form-item label="管理员头像">
-          <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="assistantData.headpic" :src="assistantData.headpic" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
+      <el-col :span="12">
         <el-form-item label="管理员id">
           {{assistantData.id}}
         </el-form-item>
         <el-form-item label="管理员账号">
-          {{assistantData.assistantname}}
+          {{assistantData.username}}
         </el-form-item>
         <el-form-item label="管理员性别">
           <el-select v-model="assistantData.gender" placeholder="管理员性别">
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="0"></el-option>
+            <el-option label="男" :value="1"></el-option>
+            <el-option label="女" :value="0"></el-option>
           </el-select>
-        </el-form-item>
-        <el-form-item label="当前状态">
-          {{assistantData.iseffective}}
         </el-form-item>
         <el-form-item label="手机号">
           <el-input v-model="assistantData.phone" placeholder="输入手机号"></el-input>
         </el-form-item>
-        <el-form-item label="email">
-          <el-input v-model="assistantData.email" placeholder="输入email"></el-input>
-        </el-form-item>
       </el-col>
-      <el-col span="12">
-        <el-form-item label="昵称">
-          <el-input v-model="assistantData.nickname" placeholder="输入昵称"></el-input>
-        </el-form-item>
+      <el-col :span="12">
         <el-form-item label="真实姓名">
           <el-input v-model="assistantData.name" placeholder="输入真实姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="生日">
-          <el-date-picker v-model="assistantData.birthday" type="date" placeholder="选择日期">
-          </el-date-picker>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">确认修改</el-button>
@@ -50,12 +30,13 @@
   </div>
 </template>
 <script>
+  import operator from '@/services/system/operator'
   export default {
     name: 'assistant-edit',
     data() {
       return {
         assistantid: this.$route.query.id || -1,
-        assistantData: {
+        assistantData: this.$store.state.operator.info || {
           id: '测试数据',
           assistantname: '测试数据',
           headpic: 'headpic',
@@ -70,13 +51,41 @@
       }
     },
     methods: {
-      fetchData(id = '-1') {
-        if (id > 0) {
-
+      fetchData() {
+        const params = {
+          id: this.$store.state.operator.id,
+          page: 1,
+          size: 1
         }
+        operator.findbyname(params).then(json => {
+          this.assistantData = json.data[0];
+           this.$message({
+            showClose: true,
+            message: '修改成功！',
+            type: 'success'
+          });
+        }).catch(err => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message: '系统出错',
+            type: 'error'
+          });
+          this.$loading = false;
+        });
       },
       onSubmit() {
-
+        operator.update(this.assistantData).then(json => {
+          this.fetchData();
+        }).catch(err => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message: '系统出错',
+            type: 'error'
+          });
+          this.$loading = false;
+        });
       },
       handleAvatarSuccess(res, file) {
         this.assistantData.headpic = URL.createObjectURL(file.raw);
@@ -92,11 +101,7 @@
         }
         return isJPG && isLt2M;
       }
-    },
-    created() {
-      this.fetchData(this.itemid);
     }
-
   }
 
 </script>

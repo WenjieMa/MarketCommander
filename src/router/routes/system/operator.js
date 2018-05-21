@@ -58,7 +58,7 @@ const operatorRoute = {
       meta: {
         menu: 'operator|role-list',
         name: '权限下人员查看',
-        index: 4
+        index: 3
       },
       component: resolve => require(['@/pages/system/operator/role/role2assistant'], resolve)
     },
@@ -68,7 +68,7 @@ const operatorRoute = {
       meta: {
         menu: 'operator|role-list',
         name: '权限赋予',
-        index: 5
+        index: 4
       },
       component: resolve => require(['@/pages/system/operator/role/role2assistant-add'], resolve)
     }

@@ -1,15 +1,15 @@
 <template>
   <div class="start-images-list">
-    <router-link :to="{path:'/system/main-page/start-images-edit'}">
+    <router-link :to="{path:'/system/main-page/start-images-edit', query:{imageData:{id:-1,src:'',link:''}}}">
       <el-button type="success">新增图片</el-button>
     </router-link>
     <el-table :data="datas.imageData" style="width: 100%">
       <el-table-column label="图片">
         <template slot-scope="scope">
-          <img :src="scope.row.src" />
+          <img :src="scope.row.src" class="item-img-big-cart" />
         </template>
       </el-table-column>
-      <el-table-column label="链接" prop="link">
+      <el-table-column label="链接商品id" prop="link">
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">

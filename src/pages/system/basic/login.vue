@@ -49,10 +49,7 @@
           this.$loading = false;
           this.$store.state.operator = {
             correct: true,
-            info: {
-              operid: json.data.infoOperator.id,
-              name: json.data.infoOperator.name
-            }
+            info: json.data.infoOperator
           }
           var rolestr = '';
           json.data.infoRoles.forEach(element => {
